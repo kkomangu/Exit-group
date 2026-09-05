@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>조직 전용 계산기</title>
+    <title>조직 계산기</title>
     <style>
         :root {
             --bg-color: #121212;
@@ -222,7 +222,7 @@
     <div class="categories-container">
         <!-- 1번째 카테고리 카드 -->
         <div class="category-card">
-            <div class="section-title">🔫 무기류</div>
+            <div class="section-title">🔫 무기</div>
             <div class="item-header">
                 <span style="flex:1.8;">품목명</span>
                 <span style="width:45px; text-align:center;">수량</span>
@@ -231,35 +231,35 @@
             </div>
             
             <div class="item-row" data-category="1">
-                <div class="col-name"><span class="item-name">ㅍ</span></div>
+                <div class="col-name"><span class="item-name">피스톨</span></div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
                 <div class="col-price"><input type="text" class="price-input" value="100,000,000" oninput="formatInput(this); calculateAll();"></div>
                 <div class="col-subtotal subtotal">0</div>
             </div>
 
             <div class="item-row" data-category="1">
-                <div class="col-name"><span class="item-name">ㅋ</span></div>
+                <div class="col-name"><span class="item-name">카빈소총</span></div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
                 <div class="col-price"><input type="text" class="price-input" value="250,000,000" oninput="formatInput(this); calculateAll();"></div>
                 <div class="col-subtotal subtotal">0</div>
             </div>
 
             <div class="item-row" data-category="1">
-                <div class="col-name"><span class="item-name">ㅇ (200M)</span></div>
+                <div class="col-name"><span class="item-name">어썰트라이플</span></div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
                 <div class="col-price"><input type="text" class="price-input" value="200,000,000" oninput="formatInput(this); calculateAll();"></div>
                 <div class="col-subtotal subtotal">0</div>
             </div>
 
             <div class="item-row" data-category="1">
-                <div class="col-name"><span class="item-name">ㅇ (150M)</span></div>
+                <div class="col-name"><span class="item-name">마이크로SMG/span></div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
                 <div class="col-price"><input type="text" class="price-input" value="150,000,000" oninput="formatInput(this); calculateAll();"></div>
                 <div class="col-subtotal subtotal">0</div>
             </div>
 
             <div class="item-row" data-category="1">
-                <div class="col-name"><span class="item-name">ㅅ</span></div>
+                <div class="col-name"><span class="item-name">펌프샷건</span></div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
                 <div class="col-price"><input type="text" class="price-input" value="150,000,000" oninput="formatInput(this); calculateAll();"></div>
                 <div class="col-subtotal subtotal">0</div>
@@ -267,7 +267,7 @@
 
             <div class="item-row" data-category="1">
                 <div class="col-name">
-                    <span class="item-name">옹</span>
+                    <span class="item-name">총알</span>
                     <span class="item-memo">📝 100발</span>
                 </div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
@@ -278,7 +278,7 @@
 
         <!-- 2번째 카테고리 카드 -->
         <div class="category-card">
-            <div class="section-title">📦 소모품 / 약</div>
+            <div class="section-title">💊 마약</div>
             <div class="item-header">
                 <span style="flex:1.8;">품목명</span>
                 <span style="width:45px; text-align:center;">수량</span>
@@ -288,7 +288,7 @@
 
             <div class="item-row" data-category="2">
                 <div class="col-name">
-                    <span class="item-name">입장권</span>
+                    <span class="item-name">마약공장 입장권</span>
                     <span class="item-memo">📝 하루 제한: 10개</span>
                 </div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" max="10" oninput="limitMax(this, 10); calculateAll();"></div>
@@ -298,7 +298,7 @@
 
             <div class="item-row" data-category="2">
                 <div class="col-name">
-                    <span class="item-name">씨앗</span>
+                    <span class="item-name">대마초 씨앗</span>
                     <span class="item-memo">📝 1000개</span>
                 </div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
@@ -307,9 +307,9 @@
             </div>
         </div>
 
-        <!-- 3번째 카테고리 카드 (추가 카테고리 샘플) -->
+        <!-- 3번째 카테고리-->
         <div class="category-card">
-            <div class="section-title">🛡️ 기타 / 장비</div>
+            <div class="section-title">⚔️ 근접무</div>
             <div class="item-header">
                 <span style="flex:1.8;">품목명</span>
                 <span style="width:45px; text-align:center;">수량</span>
@@ -317,12 +317,30 @@
                 <span style="flex:1.8; text-align:right;">소계</span>
             </div>
 
-            <div class="item-row" data-category="3">
+             <div class="item-row" data-category="2">
                 <div class="col-name">
-                    <span class="item-name">방어구</span>
+                    <span class="item-name">스위치 블레이드</span>
                 </div>
                 <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
                 <div class="col-price"><input type="text" class="price-input" value="50,000,000" oninput="formatInput(this); calculateAll();"></div>
+                <div class="col-subtotal subtotal">0</div>
+            </div>
+            
+             <div class="item-row" data-category="3">
+                <div class="col-name">
+                    <span class="item-name">플래쉬</span>
+                </div>
+                <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
+                <div class="col-price"><input type="text" class="price-input" value="50,000,000" oninput="formatInput(this); calculateAll();"></div>
+                <div class="col-subtotal subtotal">0</div>
+            </div>
+
+            <div class="item-row" data-category="3">
+                <div class="col-name">
+                    <span class="item-name">C4/span>
+                </div>
+                <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
+                <div class="col-price"><input type="text" class="price-input" value="20,000,000" oninput="formatInput(this); calculateAll();"></div>
                 <div class="col-subtotal subtotal">0</div>
             </div>
         </div>
@@ -333,15 +351,15 @@
     <!-- 결과 영역 -->
     <div class="result-box">
         <div class="result-item">
-            <span>무기류 합계:</span>
+            <span>무기 합계:</span>
             <span id="cat1Total">0</span>
         </div>
         <div class="result-item">
-            <span>소모품/약 합계:</span>
+            <span>마약 합계:</span>
             <span id="cat2Total">0</span>
         </div>
         <div class="result-item">
-            <span>기타/장비 합계:</span>
+            <span>근접무기 합계:</span>
             <span id="cat3Total">0</span>
         </div>
         <div class="result-item result-total">

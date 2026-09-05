@@ -2,282 +2,365 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>품목별 계산기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조직 계산기</title>
     <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #ff4757;
+            --text-color: #ffffff;
+            --text-sub: #a4b0be;
+            --border-color: #2f3542;
+            --input-bg: #2f3542;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f0f2f5;
             margin: 0;
-            padding: 20px 0;
+            padding: 20px 10px;
+            box-sizing: border-box;
         }
+
         .calculator {
-            background: #ffffff;
+            background: var(--card-bg);
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 520px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid var(--border-color);
         }
+
         h2 {
             text-align: center;
             margin-top: 0;
-            color: #333;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            font-size: 22px;
+            letter-spacing: -0.5px;
         }
+
         .section-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 5px;
-            margin-top: 20px;
+            color: #ffa502;
+            border-bottom: 2px solid #ffa502;
+            padding-bottom: 6px;
+            margin-top: 25px;
             margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
         .item-header {
             display: flex;
-            font-weight: bold;
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 6px;
-            padding: 0 5px;
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            padding: 0 4px;
+            font-weight: 600;
         }
+
         .item-row {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             gap: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 6px 8px;
+            border-radius: 8px;
         }
+
         .col-name {
             flex: 2;
             display: flex;
             flex-direction: column;
         }
+
         .col-qty {
-            width: 60px;
+            width: 55px;
         }
+
         .col-price {
-            flex: 2;
+            flex: 2.2;
         }
+
         .col-subtotal {
-            flex: 2;
+            flex: 2.2;
             text-align: right;
             font-size: 13px;
             font-weight: bold;
-            color: #28a745;
+            color: #2ed573;
         }
+
         .item-name {
             font-size: 14px;
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: var(--text-color);
         }
+
         .item-memo {
             font-size: 11px;
-            color: #888;
+            color: var(--text-sub);
             margin-top: 2px;
         }
+
         input {
-            padding: 8px;
+            padding: 8px 6px;
             font-size: 13px;
-            border: 1px solid #ccc;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             box-sizing: border-box;
             width: 100%;
+            outline: none;
+            transition: border-color 0.2s;
         }
+
+        input:focus {
+            border-color: var(--accent-color);
+        }
+
         input.qty-input {
             text-align: center;
         }
+
         input.price-input {
             text-align: right;
         }
+
         button {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             font-size: 16px;
-            background-color: #28a745;
+            background-color: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 20px;
+            margin-top: 25px;
+            transition: background 0.2s;
         }
+
         button:hover {
-            background-color: #218838;
+            background-color: #ff6b81;
         }
+
         .result-box {
             margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            font-size: 15px;
+            padding: 16px;
+            background: #2f3542;
+            border-radius: 10px;
+            font-size: 14px;
         }
+
         .result-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
+            color: var(--text-sub);
         }
+
+        .result-item span:last-child {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
         .result-total {
-            border-top: 2px solid #007bff;
-            padding-top: 8px;
-            margin-top: 8px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
+            margin-top: 10px;
             font-weight: bold;
             font-size: 17px;
-            color: #d9534f;
+            color: var(--accent-color) !important;
+        }
+
+        .result-total span:last-child {
+            color: var(--accent-color) !important;
         }
     </style>
 </head>
 <body>
 
 <div class="calculator">
-    <h2>품목 계산기</h2>
+    <h2>⚔️ 조직 관리 계산기</h2>
 
     <!-- 1번째 카테고리 -->
-    <div class="section-title">⚔️ 1번째 카테고리 (무기)</div>
+    <div class="section-title">
+        <span>🔫 무기</span>
+    </div>
     <div class="item-header">
-        <span style="flex:2;">물품 이름</span>
-        <span style="width:60px; text-align:center;">수량</span>
-        <span style="flex:2; text-align:right;">단가 (XXX)</span>
-        <span style="flex:2; text-align:right;">소계</span>
+        <span style="flex:2;">품목명</span>
+        <span style="width:55px; text-align:center;">수량</span>
+        <span style="flex:2.2; text-align:right;">단가</span>
+        <span style="flex:2.2; text-align:right;">소계</span>
     </div>
     
     <div class="item-row" data-category="1">
-        <div class="col-name"><span class="item-name">ㅍ</span></div>
+        <div class="col-name"><span class="item-name">피스톨</span></div>
         <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
-        <div class="col-price"><input type="text" class="price-input" value="(100) (000) (000)" oninput="formatInput(this); calculateAll();"></div>
-        <div class="col-subtotal subtotal">(0)</div>
+        <div class="col-price"><input type="text" class="price-input" value="100,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
 
     <div class="item-row" data-category="1">
-        <div class="col-name"><span class="item-name">ㅋ</span></div>
+        <div class="col-name"><span class="item-name">카빈소총</span></div>
         <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
-        <div class="col-price"><input type="text" class="price-input" value="(250) (000) (000)" oninput="formatInput(this); calculateAll();"></div>
-        <div class="col-subtotal subtotal">(0)</div>
+        <div class="col-price"><input type="text" class="price-input" value="250,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
 
     <div class="item-row" data-category="1">
-        <div class="col-name"><span class="item-name">ㅇ (200M)</span></div>
+        <div class="col-name"><span class="item-name">어썰트라이플</span></div>
         <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
-        <div class="col-price"><input type="text" class="price-input" value="(200) (000) (000)" oninput="formatInput(this); calculateAll();"></div>
-        <div class="col-subtotal subtotal">(0)</div>
+        <div class="col-price"><input type="text" class="price-input" value="200,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
 
     <div class="item-row" data-category="1">
-        <div class="col-name"><span class="item-name">ㅇ (150M)</span></div>
+        <div class="col-name"><span class="item-name">마이크로SMG</span></div>
         <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
-        <div class="col-price"><input type="text" class="price-input" value="(150) (000) (000)" oninput="formatInput(this); calculateAll();"></div>
-        <div class="col-subtotal subtotal">(0)</div>
+        <div class="col-price"><input type="text" class="price-input" value="150,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
 
     <div class="item-row" data-category="1">
-        <div class="col-name"><span class="item-name">ㅅ</span></div>
+        <div class="col-name"><span class="item-name">펌프샷건</span></div>
         <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
-        <div class="col-price"><input type="text" class="price-input" value="(150) (000) (000)" oninput="formatInput(this); calculateAll();"></div>
-        <div class="col-subtotal subtotal">(0)</div>
+        <div class="col-price"><input type="text" class="price-input" value="150,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
 
     <div class="item-row" data-category="1">
         <div class="col-name">
-            <span class="item-name">옹</span>
+            <span class="item-name">총알</span>
             <span class="item-memo">📝 100발</span>
         </div>
         <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
-        <div class="col-price"><input type="text" class="price-input" value="(010) (000) (000)" oninput="formatInput(this); calculateAll();"></div>
-        <div class="col-subtotal subtotal">(0)</div>
+        <div class="col-price"><input type="text" class="price-input" value="10,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
-
 
     <!-- 2번째 카테고리 -->
-    <div class="section-title">💊 2번째 카테고리 (약/소모품)</div>
-    <div class="item-header">
-        <span style="flex:2;">물품 이름</span>
-        <span style="width:60px; text-align:center;">수량</span>
-        <span style="flex:2; text-align:right;">단가 (XXX)</span>
-        <span style="flex:2; text-align:right;">소계</span>
+<div class="section-title">
+    <span>🔪 근접무기</span>
+</div>
+<div class="item-header">
+    <span style="flex:2;">품목명</span>
+    <span style="width:55px; text-align:center;">수량</span>
+    <span style="flex:2.2; text-align:right;">단가</span>
+    <span style="flex:2.2; text-align:right;">소계</span>
+</div>
+    
+    <div class="item-row" data-category="2">
+        <div class="col-name"><span class="item-name">스위치 블레이드</span></div>
+        <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
+        <div class="col-price"><input type="text" class="price-input" value="50,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
 
     <div class="item-row" data-category="2">
+        <div class="col-name"><span class="item-name">플래쉬</span></div>
+        <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
+        <div class="col-price"><input type="text" class="price-input" value="50,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
+    </div>
+
+    <div class="item-row" data-category="2">
+        <div class="col-name"><span class="item-name">C4</span></div>
+        <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
+        <div class="col-price"><input type="text" class="price-input" value="20,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
+    </div>
+
+    <!-- 3번째 카테고리 -->
+    <div class="section-title">
+        <span>💊 마약</span>
+    </div>
+    <div class="item-header">
+        <span style="flex:2;">품목명</span>
+        <span style="width:55px; text-align:center;">수량</span>
+        <span style="flex:2.2; text-align:right;">단가</span>
+        <span style="flex:2.2; text-align:right;">소계</span>
+    </div>
+
+    <div class="item-row" data-category="3">
         <div class="col-name">
-            <span class="item-name">입장권</span>
+            <span class="item-name">마약공장 입장권</span>
             <span class="item-memo">📝 하루 제한: 10개</span>
         </div>
-        <!-- max=10 제한 적용 -->
         <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" max="10" oninput="limitMax(this, 10); calculateAll();"></div>
-        <div class="col-price"><input type="text" class="price-input" value="(030) (000) (000)" oninput="formatInput(this); calculateAll();"></div>
-        <div class="col-subtotal subtotal">(0)</div>
+        <div class="col-price"><input type="text" class="price-input" value="30,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
 
-    <div class="item-row" data-category="2">
+    <div class="item-row" data-category="3">
         <div class="col-name">
-            <span class="item-name">씨앗</span>
+            <span class="item-name">대마초 씨앗</span>
             <span class="item-memo">📝 1000개</span>
         </div>
         <div class="col-qty"><input type="number" class="qty-input" value="1" min="0" oninput="calculateAll()"></div>
-        <div class="col-price"><input type="text" class="price-input" value="(100) (000) (000)" oninput="formatInput(this); calculateAll();"></div>
-        <div class="col-subtotal subtotal">(0)</div>
+        <div class="col-price"><input type="text" class="price-input" value="100,000,000" oninput="formatInput(this); calculateAll();"></div>
+        <div class="col-subtotal subtotal">0</div>
     </div>
 
-    <button onclick="calculateAll()">합계 새로고침</button>
+    <button onclick="calculateAll()">합계 계산하기</button>
 
     <!-- 결과 영역 -->
     <div class="result-box">
         <div class="result-item">
-            <span>1번째 카테고리 합계:</span>
-            <span id="cat1Total">(0)</span>
+            <span>무기 합계:</span>
+            <span id="cat1Total">0</span>
         </div>
         <div class="result-item">
-            <span>2번째 카테고리 합계:</span>
-            <span id="cat2Total">(0)</span>
+            <span>근접무기 합계:</span>
+            <span id="cat1Total">0</span>
+        </div>
+        <div class="result-item">
+            <span>마약 합계:</span>
+            <span id="cat2Total">0</span>
         </div>
         <div class="result-item result-total">
             <span>전체 총합:</span>
-            <span id="grandTotal">(0)</span>
+            <span id="grandTotal">0</span>
         </div>
     </div>
 </div>
 
 <script>
-    // 입장권 수량 10개 초과 입력 방지 함수
     function limitMax(input, max) {
         if (parseInt(input.value) > max) {
-            alert('입장권은 하루 최대 ' + max + '개까지만 선택 가능합니다.');
+            alert('하루 최대 ' + max + '개까지만 선택 가능합니다.');
             input.value = max;
         }
     }
 
-    // 입력할 때 3자리 단위 (XXX) (XXX) 형태로 포맷 변환
+    // 천 단위 쉼표(,) 자동 변환 함수
     function formatInput(input) {
         let rawValue = input.value.replace(/\D/g, '');
         if (rawValue === '') {
             input.value = '';
             return;
         }
-
-        let formatted = '';
-        for (let i = 0; i < rawValue.length; i += 3) {
-            let chunk = rawValue.substring(i, i + 3);
-            formatted += `(${chunk}) `;
-        }
-
-        input.value = formatted.trim();
+        input.value = Number(rawValue).toLocaleString('ko-KR');
     }
 
-    // 숫자를 (XXX) (XXX) 포맷 문자열로 변환
+    // 숫자를 천 단위 쉼표 포맷으로 변환 함수
     function formatNumber(num) {
-        let str = num.toString();
-        if (str === '0' || str === '') return '(0)';
-
-        let formatted = '';
-        for (let i = 0; i < str.length; i += 3) {
-            let chunk = str.substring(i, i + 3);
-            formatted += `(${chunk}) `;
-        }
-        return formatted.trim();
+        if (isNaN(num) || num === 0) return '0';
+        return num.toLocaleString('ko-KR');
     }
 
-    // 전체 계산 수행 및 품목별 소계 표시
     function calculateAll() {
         let cat1Total = 0;
         let cat2Total = 0;
@@ -288,8 +371,6 @@
             let price = parseInt(row.querySelector('.price-input').value.replace(/\D/g, '')) || 0;
             
             let itemSubtotal = qty * price;
-            
-            // 각 품목별 소계 표시
             row.querySelector('.subtotal').innerText = formatNumber(itemSubtotal);
 
             if (cat === '1') {
@@ -306,7 +387,6 @@
         document.getElementById('grandTotal').innerText = formatNumber(grandTotal);
     }
 
-    // 페이지 로드 시 초기 계산 수행
     window.onload = function() {
         calculateAll();
     };

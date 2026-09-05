@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>조직 전용 계산기</title>
+    <title>조직 계산기</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -276,94 +276,90 @@
         </div>
 
         <div class="categories-container">
-            <!-- 1번째 카테고리: 무기류 -->
+            <!-- 1번째 카테고리: 무기 -->
             <div class="category-card">
-                <div class="section-title">🔫 무기류</div>
+                <div class="section-title">🔫 무기</div>
                 
                 <div class="item-row">
                     <div class="item-info">
-                        <span class="item-name">ㅍ</span>
+                        <span class="item-name">피스톨</span>
                         <span class="item-price-text">100,000,000원</span>
                     </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('ㅍ', 100000000)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemToReceipt('피스톨', 100000000)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
                     <div class="item-info">
-                        <span class="item-name">ㅋ</span>
+                        <span class="item-name">카빈소총</span>
                         <span class="item-price-text">250,000,000원</span>
                     </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('ㅋ', 250000000)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemToReceipt('카빈소총', 250000000)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
                     <div class="item-info">
-                        <span class="item-name">ㅇ (200M)</span>
+                        <span class="item-name">어썰트라이플</span>
                         <span class="item-price-text">200,000,000원</span>
                     </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('ㅇ (200M)', 200000000)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemToReceipt('어썰트라이플', 200000000)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
                     <div class="item-info">
-                        <span class="item-name">ㅅ</span>
+                        <span class="item-name">펌프샷건</span>
                         <span class="item-price-text">150,000,000원</span>
                     </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('ㅅ', 150000000)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemToReceipt('펌프샷건', 150000000)">+ 추가</button>
                 </div>
             </div>
 
             <!-- 2번째 카테고리: 소모품 -->
             <div class="category-card">
-                <div class="section-title">📦 소모품 / 약</div>
+                <div class="section-title">📦 마약</div>
                 
                 <div class="item-row">
                     <div class="item-info">
-                        <span class="item-name">입장권</span>
+                        <span class="item-name">마약공장 입장권</span>
                         <span class="item-price-text">30,000,000원</span>
                     </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('입장권', 30000000)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemToReceipt('마약공장 입장권', 30000000)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
                     <div class="item-info">
-                        <span class="item-name">씨앗</span>
+                        <span class="item-name">대마초 씨앗</span>
                         <span class="item-price-text">100,000,000원</span>
                     </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('씨앗', 100000000)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemToReceipt('대마초 씨앗', 100000000)">+ 추가</button>
                 </div>
             </div>
 
-            <!-- 3번째 카테고리 (새로 추가된 영역) -->
+            <!-- 3번째 카테고리: 근접무기 -->
             <div class="category-card">
-                <!-- 카테고리 제목 수정 위치 -->
-                <div class="section-title">🔰 기타 항목</div>
+                <div class="section-title">🔰 근접무기</div>
                 
-                <!-- 3번째 카테고리 - 품목 1 -->
                 <div class="item-row">
                     <div class="item-info">
-                        <span class="item-name">항목 1</span>
-                        <span class="item-price-text">10,000,000원</span>
+                        <span class="item-name">스위치 블레이드</span>
+                        <span class="item-price-text">50,000,000원</span>
                     </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('항목 1', 10000000)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemToReceipt('스위치 블레이드', 50000000)">+ 추가</button>
                 </div>
 
-                <!-- 3번째 카테고리 - 품목 2 -->
                 <div class="item-row">
                     <div class="item-info">
-                        <span class="item-name">항목 2</span>
+                        <span class="item-name">플래쉬</span>
+                        <span class="item-price-text">50,000,000원</span>
+                    </div>
+                    <button class="btn-add-item" onclick="addItemToReceipt('플래쉬', 50000000)">+ 추가</button>
+                </div>
+
+                <div class="item-row">
+                    <div class="item-info">
+                        <span class="item-name">C4</span>
                         <span class="item-price-text">20,000,000원</span>
                     </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('항목 2', 20000000)">+ 추가</button>
-                </div>
-
-                <!-- 3번째 카테고리 - 품목 3 -->
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">항목 3</span>
-                        <span class="item-price-text">30,000,000원</span>
-                    </div>
-                    <button class="btn-add-item" onclick="addItemToReceipt('항목 3', 30000000)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemToReceipt('C4', 20000000)">+ 추가</button>
                 </div>
             </div>
         </div>

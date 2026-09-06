@@ -344,7 +344,7 @@
                     </div>                    
                     
                     <input type="number" id="qty-3" class="item-qty-input" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('총알', 10000000, 'qty-3')">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemWithQty('총알', 10000000, 'qty-3', Infinity, 100)">+ 추가</button>
                 </div>
             </div>
 
@@ -360,7 +360,7 @@
                     </div>
                     
                     <input type="number" id="qty-2" class="item-qty-input" value="1" min="1" max="10">
-                    <button class="btn-add-item" onclick="addItemWithQty('마약공장 입장권', 30000000, 'qty-2')">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemWithQty('마약공장 입장권', 30000000, 'qty-2', 10, 100)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
@@ -371,7 +371,7 @@
                     </div>
                     
                     <input type="number" id="qty-1" class="item-qty-input" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('대마초 씨앗', 100000000, 'qty-1')">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemWithQty('대마초 씨앗', 100000000, 'qty-1', Infinity, 1000)">+ 추가</button>
                 </div>
             </div>
 
@@ -464,14 +464,44 @@
     }
 
     function renderReceipt() {
-        let listContainer = document.getElementById('selectedList');
-        
-        if (selectedItems.length === 0) {
-            listContainer.innerHTML = '<div class="empty-msg">선택된 항목이 없습니다.</div>';
-            document.getElementById('totalQty').innerText = '0개';
-            document.getElementById('grandTotal').innerText = '0원';
-            return;
-        }
+    let receiptContainer = document.getElementById('receipt-list'); // 영수증 목록이 출력되는 요소 ID
+    let totalAmount = 0;
+    let html = '';
+
+    selectedItems.forEach((item, index) => {
+        let itemTotal = item.price * item.qty;
+        totalAmount += itemTotal;
+
+        // 묶음 단위(unit) 정보가 있으면 (수량 * 묶음수량), 없으면 기본 수량 표시
+        let displayCount = item.unit ? (item.qty * item.unit) : item.qty;
+
+        html += `
+            <div class="receipt-item">
+                <div class="receipt-item-info">
+                    <!-- 이름 옆에 실제 개수(예: 200개)를 함께 출력합니다 -->
+                    <span class="receipt-item-name">${item.name} (${displayCount}개)</span>
+                    <span class="receipt-item-price">${itemTotal.toLocaleString()}원</span>
+                </div>
+                <div class="receipt-item-qty">
+                    <button onclick="changeQty(${index}, -1)">-</button>
+                    <span>${item.qty}</span>
+                    <button onclick="changeQty(${index}, 1)">+</button>
+                    <button onclick="removeItem(${index})">✕</button>
+                </div>
+            </div>
+        `;
+    });
+
+    if (receiptContainer) {
+        receiptContainer.innerHTML = html;
+    }
+
+    // 총액 업데이트
+    let totalElement = document.getElementById('total-price');
+    if (totalElement) {
+        totalElement.innerText = totalAmount.toLocaleString() + '원';
+    }
+}
 
         let html = '';
         let totalQty = 0;
@@ -526,15 +556,12 @@
     renderReceipt();
 }
 
-function addItemWithQty(name, price, qtyInputId, maxQty = 10) {
+function addItemWithQty(name, price, qtyInputId, maxQty = 10, unit = 1) {
     let qtyElement = document.getElementById(qtyInputId);
     let count = qtyElement ? parseInt(qtyElement.value) : 1;
 
-    if (isNaN(count) || count < 1) {
-        count = 1;
-    }
+    if (isNaN(count) || count < 1) count = 1;
 
-    // 입력한 수량이 제한을 초과하는지 검증
     if (count > maxQty) {
         alert(`하루 최대 ${maxQty}개까지만 구매 가능합니다.`);
         count = maxQty;
@@ -542,9 +569,8 @@ function addItemWithQty(name, price, qtyInputId, maxQty = 10) {
 
     let existing = selectedItems.find(item => item.name === name);
     if (existing) {
-        // 기존 수량과 새로 추가하는 수량의 합이 제한을 넘는지 확인
         if (existing.qty + count > maxQty) {
-            alert(`하루 판매 제한(${maxQty}개)을 초과할 수 없습니다. (현재: ${existing.qty}개)`);
+            alert(`하루 판매 제한(${maxQty}개)을 초과할 수 없습니다.`);
             existing.qty = maxQty;
         } else {
             existing.qty += count;
@@ -553,7 +579,8 @@ function addItemWithQty(name, price, qtyInputId, maxQty = 10) {
         selectedItems.push({
             name: name,
             price: price,
-            qty: count
+            qty: count,
+            unit: unit // 묶음 단위 저장 (기본값 1)
         });
     }
 

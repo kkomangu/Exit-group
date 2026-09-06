@@ -430,165 +430,97 @@
 </div>
 
 <script>
+    // 선택된 항목들을 담을 배열
     let selectedItems = [];
 
-    function formatNumber(num) {
-        return num.toLocaleString('ko-KR');
-    }
+    // 수량과 제한, 묶음 단위를 처리하는 추가 함수
+    function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
+        let qtyElement = document.getElementById(qtyInputId);
+        let count = qtyElement ? parseInt(qtyElement.value) : 1;
 
-    function addItemToReceipt(name, price) {
+        if (isNaN(count) || count < 1) count = 1;
+
+        // maxQty가 0보다 클 때만 수량 제한 검사 (0은 무제한)
+        if (maxQty > 0 && count > maxQty) {
+            alert(`하루 최대 ${maxQty}개까지만 구매 가능합니다.`);
+            count = maxQty;
+        }
+
         let existing = selectedItems.find(item => item.name === name);
         if (existing) {
-            existing.qty += 1;
+            if (maxQty > 0 && existing.qty + count > maxQty) {
+                alert(`하루 판매 제한(${maxQty}개)을 초과할 수 없습니다. (현재: ${existing.qty}개)`);
+                existing.qty = maxQty;
+            } else {
+                existing.qty += count;
+            }
         } else {
             selectedItems.push({
                 name: name,
                 price: price,
-                qty: 1
+                qty: count,
+                unit: unit
             });
         }
+
+        if (qtyElement) qtyElement.value = 1;
         renderReceipt();
     }
 
+    // 수량 변경 함수 (+ / - 버튼)
     function changeQty(index, delta) {
-        selectedItems[index].qty += delta;
-        if (selectedItems[index].qty <= 0) {
-            selectedItems.splice(index, 1);
+        if (selectedItems[index]) {
+            selectedItems[index].qty += delta;
+            if (selectedItems[index].qty <= 0) {
+                selectedItems.splice(index, 1);
+            }
         }
         renderReceipt();
     }
 
-    function deleteItem(index) {
+    // 항목 삭제 함수 (X 버튼)
+    function removeItem(index) {
         selectedItems.splice(index, 1);
         renderReceipt();
     }
 
+    // 영수증 목록 화면 출력 함수
     function renderReceipt() {
-    let receiptContainer = document.getElementById('receipt-list'); // 영수증 목록이 출력되는 요소 ID
-    let totalAmount = 0;
-    let html = '';
-
-    selectedItems.forEach((item, index) => {
-        let itemTotal = item.price * item.qty;
-        totalAmount += itemTotal;
-
-        // 묶음 단위(unit) 정보가 있으면 (수량 * 묶음수량), 없으면 기본 수량 표시
-        let displayCount = item.unit ? (item.qty * item.unit) : item.qty;
-
-        html += `
-            <div class="receipt-item">
-                <div class="receipt-item-info">
-                    <!-- 이름 옆에 실제 개수(예: 200개)를 함께 출력합니다 -->
-                    <span class="receipt-item-name">${item.name} (${displayCount}개)</span>
-                    <span class="receipt-item-price">${itemTotal.toLocaleString()}원</span>
-                </div>
-                <div class="receipt-item-qty">
-                    <button onclick="changeQty(${index}, -1)">-</button>
-                    <span>${item.qty}</span>
-                    <button onclick="changeQty(${index}, 1)">+</button>
-                    <button onclick="removeItem(${index})">✕</button>
-                </div>
-            </div>
-        `;
-    });
-
-    if (receiptContainer) {
-        receiptContainer.innerHTML = html;
-    }
-
-    // 총액 업데이트
-    let totalElement = document.getElementById('total-price');
-    if (totalElement) {
-        totalElement.innerText = totalAmount.toLocaleString() + '원';
-    }
-}
-
+        let receiptContainer = document.getElementById('receipt-list');
+        let totalAmount = 0;
         let html = '';
-        let totalQty = 0;
-        let grandTotal = 0;
 
         selectedItems.forEach((item, index) => {
-            let itemSubtotal = item.price * item.qty;
-            totalQty += item.qty;
-            grandTotal += itemSubtotal;
+            let itemTotal = item.price * item.qty;
+            totalAmount += itemTotal;
+
+            let displayCount = item.unit ? (item.qty * item.unit) : item.qty;
 
             html += `
-                <div class="selected-item-row">
-                    <div class="selected-item-info">
-                        <span class="selected-item-name">${item.name}</span>
-                        <span class="selected-item-price">${formatNumber(itemSubtotal)}원</span>
+                <div class="receipt-item">
+                    <div class="receipt-item-info">
+                        <span class="receipt-item-name">${item.name} (${displayCount}개)</span>
+                        <span class="receipt-item-price">${itemTotal.toLocaleString()}원</span>
                     </div>
-                    <div class="qty-controls">
-                        <button class="btn-qty" onclick="changeQty(${index}, -1)">-</button>
-                        <span class="qty-val">${item.qty}</span>
-                        <button class="btn-qty" onclick="changeQty(${index}, 1)">+</button>
-                        <button class="btn-del-selected" onclick="deleteItem(${index})">✕</button>
+                    <div class="receipt-item-qty">
+                        <button onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.qty}</span>
+                        <button onclick="changeQty(${index}, 1)">+</button>
+                        <button onclick="removeItem(${index})">✕</button>
                     </div>
                 </div>
             `;
         });
 
-        listContainer.innerHTML = html;
-        document.getElementById('totalQty').innerText = totalQty + '개';
-        document.getElementById('grandTotal').innerText = formatNumber(grandTotal) + '원';
-    }
-    function addItemWithMemo(name, price, memoInputId) {
-    let memoElement = document.getElementById(memoInputId);
-    let memoText = memoElement ? memoElement.value.trim() : '';
-
-    // 메모가 있으면 '입장권 (메모내용)' 형태로 이름 표시
-    let displayName = memoText ? `${name} (${memoText})` : name;
-
-    let existing = selectedItems.find(item => item.name === displayName);
-    if (existing) {
-        existing.qty += 1;
-    } else {
-        selectedItems.push({
-            name: displayName,
-            price: price,
-            qty: 1
-        });
-    }
-
-    // 추가 후 입력창 내용 초기화
-    if (memoElement) memoElement.value = '';
-
-    renderReceipt();
-}
-
-function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
-    let qtyElement = document.getElementById(qtyInputId);
-    let count = qtyElement ? parseInt(qtyElement.value) : 1;
-
-    if (isNaN(count) || count < 1) count = 1;
-
-    // maxQty가 0보다 클 때만 제한 검사 (0이면 무제한)
-    if (maxQty > 0 && count > maxQty) {
-        alert(`하루 최대 ${maxQty}개까지만 구매 가능합니다.`);
-        count = maxQty;
-    }
-
-    let existing = selectedItems.find(item => item.name === name);
-    if (existing) {
-        // 기존 담긴 수량 검사도 maxQty가 0보다 클 때만 실행
-        if (maxQty > 0 && existing.qty + count > maxQty) {
-            alert(`하루 판매 제한(${maxQty}개)을 초과할 수 없습니다. (현재: ${existing.qty}개)`);
-            existing.qty = maxQty;
-        } else {
-            existing.qty += count;
+        if (receiptContainer) {
+            receiptContainer.innerHTML = html;
         }
-    } else {
-        selectedItems.push({
-            name: name,
-            price: price,
-            qty: count,
-            unit: unit
-        });
-    }
 
-    if (qtyElement) qtyElement.value = 1;
-    renderReceipt();
-}
-    </script>
+        let totalElement = document.getElementById('total-price');
+        if (totalElement) {
+            totalElement.innerText = totalAmount.toLocaleString() + '원';
+        }
+    }
+</script>
 </body>
 </html>

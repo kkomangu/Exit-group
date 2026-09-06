@@ -486,42 +486,41 @@
 
     // 영수증 목록 화면 출력 함수
     function renderReceipt() {
-        let receiptContainer = document.getElementById('receipt-list');
-        let totalAmount = 0;
-        let html = '';
+    let receiptContainer = document.getElementById('receipt-list');
+    let totalAmount = 0;
+    let html = '';
 
-        selectedItems.forEach((item, index) => {
-            let itemTotal = item.price * item.qty;
-            totalAmount += itemTotal;
+    selectedItems.forEach((item, index) => {
+        let itemTotal = item.price * item.qty;
+        totalAmount += itemTotal;
 
-            // 묶음 단위 계산 (예: 말 2개 * 100 = 200개)
-            let displayCount = item.unit ? (item.qty * item.unit) : item.qty;
+        let displayCount = item.unit ? (item.qty * item.unit) : item.qty;
 
-            html += `
-                <div class="receipt-item">
-                    <div class="receipt-item-info">
-                        <span class="receipt-item-name">${item.name} (${displayCount}개)</span>
-                        <span class="receipt-item-price">${itemTotal.toLocaleString()}원</span>
-                    </div>
-                    <div class="receipt-item-qty">
-                        <button onclick="changeQty(${index}, -1)">-</button>
-                        <span>${item.qty}</span>
-                        <button onclick="changeQty(${index}, 1)">+</button>
-                        <button onclick="removeItem(${index})">✕</button>
-                    </div>
+        html += `
+            <div class="receipt-item">
+                <div class="receipt-item-info">
+                    <span class="receipt-item-name">${item.name} (${displayCount}개)</span>
+                    <span class="receipt-item-price">${itemTotal.toLocaleString()}원</span>
                 </div>
-            `;
-        });
+                <div class="receipt-item-qty">
+                    <button onclick="changeQty(${index}, -1)">-</button>
+                    <span>${item.qty}</span>
+                    <button onclick="changeQty(${index}, 1)">+</button>
+                    <button onclick="removeItem(${index})">✕</button>
+                </div>
+            </div>
+        `;
+    });
 
-        if (receiptContainer) {
-            receiptContainer.innerHTML = html;
-        }
-
-        let totalElement = document.getElementById('total-price');
-        if (totalElement) {
-            totalElement.innerText = totalAmount.toLocaleString() + '원';
-        }
+    if (receiptContainer) {
+        receiptContainer.innerHTML = html;
     }
+
+    let totalElement = document.getElementById('total-price');
+    if (totalElement) {
+        totalElement.innerText = totalAmount.toLocaleString() + '원';
+    }
+}
 </script>
 </body>
 </html>

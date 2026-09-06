@@ -525,7 +525,29 @@
 
     renderReceipt();
 }
-</script>
 
+function addItemWithQty(name, price, qtyInputId) {
+            let qtyElement = document.getElementById(qtyInputId);
+            let count = qtyElement ? parseInt(qtyElement.value) : 1;
+
+            if (isNaN(count) || count < 1) {
+                count = 1;
+            }
+
+            let existing = selectedItems.find(item => item.name === name);
+            if (existing) {
+                existing.qty += count;
+            } else {
+                selectedItems.push({
+                    name: name,
+                    price: price,
+                    qty: count
+                });
+            }
+
+            if (qtyElement) qtyElement.value = 1;
+            renderReceipt();
+        }
+    </script>
 </body>
 </html>

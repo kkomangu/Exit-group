@@ -340,10 +340,13 @@
                     <div class="item-info">
                         <span class="item-name">총알</span>
                         <span class="item-price-text">10,000,000원</span>
+                        <span class="item-sub-info">하루 판매 제한 10개</span>
                     </div>
-                    <input type="text" id="memo-총알" class="item-memo-input" placeholder="100">
                     
-                    <button class="btn-add-item" onclick="addItemToReceipt('총알', 10000000)">+ 추가</button>
+                    <input type="text" id="memo-" class="item-memo-input" placeholder="100">
+                    
+                    <input type="number" id="qty-3" class="item-qty-input" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemToReceipt('총알', 10000000, 'qty-3')">+ 추가</button>
                 </div>
             </div>
 
@@ -355,22 +358,27 @@
                     <div class="item-info">
                         <span class="item-name">마약공장 입장권</span>
                         <span class="item-price-text">30,000,000원</span>
+                        <span class="item-sub-info">하루 판매 제한 10개</span>
                     </div>
 
-                    <input type="text" id="memo-마약공장 입장권" class="item-memo-input" placeholder="판매 갯수 제한 10개">
+                    <input type="text" id="memo-마약공장 입장권" class="item-memo-input" placeholder="갯수">
                     
-                    <button class="btn-add-item" onclick="addItemToReceipt('마약공장 입장권', 30000000)">+ 추가</button>
+                    <input type="number" id="qty-2" class="item-qty-input" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemToReceipt('마약공장 입장권', 30000000, 'qty-2')">+ 추가</button>
                 </div>
 
                 <div class="item-row">
                     <div class="item-info">
                         <span class="item-name">대마초 씨앗</span>
                         <span class="item-price-text">100,000,000원</span>
+                        <span class="item-sub-info">1000개씩</span>
                     </div>
-
-                    <input type="text" id="memo-대마초 씨앗" class="item-memo-input" placeholder="1셋">
                     
-                    <button class="btn-add-item" onclick="addItemToReceipt('대마초 씨앗', 100000000)">+ 추가</button>
+
+                    <input type="text" id="memo-대마초 씨앗" class="item-memo-input" placeholder="갯수">
+                    
+                    <input type="number" id="qty-1" class="item-qty-input" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemToReceipt('대마초 씨앗', 100000000, 'qty-1')">+ 추가</button>
                 </div>
             </div>
 

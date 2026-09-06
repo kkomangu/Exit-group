@@ -359,7 +359,7 @@
                         <span class="item-sub-info">하루 판매 제한 10개</span>
                     </div>
                     
-                    <input type="number" id="qty-2" class="item-qty-input" value="1" min="1">
+                    <input type="number" id="qty-2" class="item-qty-input" value="1" min="1" max="10">
                     <button class="btn-add-item" onclick="addItemWithQty('마약공장 입장권', 30000000, 'qty-2')">+ 추가</button>
                 </div>
 
@@ -526,28 +526,40 @@
     renderReceipt();
 }
 
-function addItemWithQty(name, price, qtyInputId) {
-            let qtyElement = document.getElementById(qtyInputId);
-            let count = qtyElement ? parseInt(qtyElement.value) : 1;
+function addItemWithQty(name, price, qtyInputId, maxQty = 10) {
+    let qtyElement = document.getElementById(qtyInputId);
+    let count = qtyElement ? parseInt(qtyElement.value) : 1;
 
-            if (isNaN(count) || count < 1) {
-                count = 1;
-            }
+    if (isNaN(count) || count < 1) {
+        count = 1;
+    }
 
-            let existing = selectedItems.find(item => item.name === name);
-            if (existing) {
-                existing.qty += count;
-            } else {
-                selectedItems.push({
-                    name: name,
-                    price: price,
-                    qty: count
-                });
-            }
+    // 입력한 수량이 제한을 초과하는지 검증
+    if (count > maxQty) {
+        alert(`하루 최대 ${maxQty}개까지만 구매 가능합니다.`);
+        count = maxQty;
+    }
 
-            if (qtyElement) qtyElement.value = 1;
-            renderReceipt();
+    let existing = selectedItems.find(item => item.name === name);
+    if (existing) {
+        // 기존 수량과 새로 추가하는 수량의 합이 제한을 넘는지 확인
+        if (existing.qty + count > maxQty) {
+            alert(`하루 판매 제한(${maxQty}개)을 초과할 수 없습니다. (현재: ${existing.qty}개)`);
+            existing.qty = maxQty;
+        } else {
+            existing.qty += count;
         }
+    } else {
+        selectedItems.push({
+            name: name,
+            price: price,
+            qty: count
+        });
+    }
+
+    if (qtyElement) qtyElement.value = 1;
+    renderReceipt();
+}
     </script>
 </body>
 </html>

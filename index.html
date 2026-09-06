@@ -556,21 +556,23 @@
     renderReceipt();
 }
 
-function addItemWithQty(name, price, qtyInputId, maxQty = 10, unit = 1) {
+function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
     let qtyElement = document.getElementById(qtyInputId);
     let count = qtyElement ? parseInt(qtyElement.value) : 1;
 
     if (isNaN(count) || count < 1) count = 1;
 
-    if (count > maxQty) {
+    // maxQty가 0보다 클 때만 제한 검사 (0이면 무제한)
+    if (maxQty > 0 && count > maxQty) {
         alert(`하루 최대 ${maxQty}개까지만 구매 가능합니다.`);
         count = maxQty;
     }
 
     let existing = selectedItems.find(item => item.name === name);
     if (existing) {
-        if (existing.qty + count > maxQty) {
-            alert(`하루 판매 제한(${maxQty}개)을 초과할 수 없습니다.`);
+        // 기존 담긴 수량 검사도 maxQty가 0보다 클 때만 실행
+        if (maxQty > 0 && existing.qty + count > maxQty) {
+            alert(`하루 판매 제한(${maxQty}개)을 초과할 수 없습니다. (현재: ${existing.qty}개)`);
             existing.qty = maxQty;
         } else {
             existing.qty += count;
@@ -580,7 +582,7 @@ function addItemWithQty(name, price, qtyInputId, maxQty = 10, unit = 1) {
             name: name,
             price: price,
             qty: count,
-            unit: unit // 묶음 단위 저장 (기본값 1)
+            unit: unit
         });
     }
 

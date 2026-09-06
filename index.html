@@ -494,6 +494,7 @@
             let itemTotal = item.price * item.qty;
             totalAmount += itemTotal;
 
+            // 묶음 단위 계산 (예: 말 2개 * 100 = 200개)
             let displayCount = item.unit ? (item.qty * item.unit) : item.qty;
 
             html += `

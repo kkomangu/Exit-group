@@ -295,6 +295,11 @@
 input[type="number"]:focus {
     border-color: var(--btn-add-color);
 }
+        input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        filter: invert(0.8);
+        cursor: pointer;
+    }
     </style>
 </head>
 <body>

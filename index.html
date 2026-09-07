@@ -300,20 +300,18 @@
                     <div class="item-info">
                         <span class="item-name">피스톨</span>
                         <span class="item-price-text">100,000,000원</span>
-                    </div>
-                    
-                    <input type="number" id="qty-8" value="1">
-                    <button onclick="addItemWithQty('피스톨', 10000000, 'qty-8', 0, 1)">+ 추가</button>
+                    </div>                    
+                    <input type="number" id="qty-8" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemWithQty('피스톨', 10000000, 'qty-8', 0, 1)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
                     <div class="item-info">
                         <span class="item-name">카빈소총</span>
                         <span class="item-price-text">250,000,000원</span>
-                    </div>
-                    
-                    <input type="number" id="qty-7" value="1">
-                    <button onclick="addItemWithQty('카빈소총', 25000000, 'qty-7', 0, 1)">+ 추가</button>
+                    </div>                    
+                    <input type="number" id="qty-7" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemWithQty('카빈소총', 25000000, 'qty-7', 0, 1)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
@@ -321,28 +319,26 @@
                         <span class="item-name">어썰트라이플</span>
                         <span class="item-price-text">200,000,000원</span>
                     </div>
-                    <input type="number" id="qty-6" value="1">
-                    <button onclick="addItemWithQty('어썰트라이플', 20000000, 'qty-6', 0, 1)">+ 추가</button>
+                    <input type="number" id="qty-6" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemWithQty('어썰트라이플', 20000000, 'qty-6', 0, 1)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
                     <div class="item-info">
                         <span class="item-name">마이크로SMG</span>
                         <span class="item-price-text">150,000,000원</span>
-                    </div>
-                    
-                    <input type="number" id="qty-5" value="1">
-                    <button onclick="addItemWithQty('마이크로SMG', 15000000, 'qty-5', 0, 1)">+ 추가</button>
+                    </div>                
+                    <input type="number" id="qty-5" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemWithQty('마이크로SMG', 15000000, 'qty-5', 0, 1)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
                     <div class="item-info">
                         <span class="item-name">펌프샷건</span>
                         <span class="item-price-text">150,000,000원</span>
-                    </div>
-                    
-                    <input type="number" id="qty-4" value="1">
-                    <button onclick="addItemWithQty('펌프샷건', 15000000, 'qty-4', 0, 1)">+ 추가</button>
+                    </div>                    
+                    <input type="number" id="qty-4" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemWithQty('펌프샷건', 15000000, 'qty-4', 0, 1)">+ 추가</button>
                 </div>
                 
                 <div class="item-row">
@@ -350,9 +346,8 @@
                         <span class="item-name">총알</span>
                         <span class="item-price-text">10,000,000원</span>
                         <span class="item-sub-info">100발</span>
-                    </div>                    
-                    
-                    <input type="number" id="qty-3" class="item-qty-input" value="1" min="1">
+                    </div>                                        
+                    <input type="number" id="qty-3" value="1" min="1">
                     <button class="btn-add-item" onclick="addItemWithQty('총알', 10000000, 'qty-3', 0, 100)">+ 추가</button>
                 </div>
             </div>
@@ -367,9 +362,8 @@
                         <span class="item-price-text">30,000,000원</span>
                         <span class="item-sub-info">하루 판매 제한 10개</span>
                     </div>
-                    
-                    <input type="number" id="qty-2" class="item-qty-input" value="1" min="1" max="10">
-                    <button onclick="addItemWithQty('마약공장 입장권', 30000000, 'qty-2', 10, 1)">+ 추가</button>
+                    <input type="number" id="qty-2" value="1" min="1" max="10">
+                    <button class="btn-add-item" onclick="addItemWithQty('마약공장 입장권', 30000000, 'qty-2', 10, 1)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
@@ -378,8 +372,7 @@
                         <span class="item-price-text">100,000,000원</span>
                         <span class="item-sub-info">1000개</span>
                     </div>
-                    
-                    <input type="number" id="qty-1" class="item-qty-input" value="1" min="1">
+                    <input type="number" id="qty-1" value="1" min="1">
                     <button class="btn-add-item" onclick="addItemWithQty('대마초 씨앗', 100000000, 'qty-1', Infinity, 1000)">+ 추가</button>
                 </div>
             </div>
@@ -393,9 +386,8 @@
                         <span class="item-name">스위치 블레이드</span>
                         <span class="item-price-text">50,000,000원</span>
                     </div>
-
-                    <input type="number" id="qty-9" class="item-qty-input" value="1" min="1">
-                    <button onclick="addItemWithQty('스위치 블레이드', 30000000, 'qty-9', 0, 1)">+ 추가</button>
+                    <input type="number" id="qty-9" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemWithQty('스위치 블레이드', 50000000, 'qty-9', 0, 1)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
@@ -403,9 +395,8 @@
                         <span class="item-name">플래쉬</span>
                         <span class="item-price-text">50,000,000원</span>
                     </div>
-
-                    <input type="number" id="qty-10" class="item-qty-input" value="1" min="1">
-                    <button onclick="addItemWithQty('플래쉬', 30000000, 'qty-10', 0, 1)">+ 추가</button>
+                    <input type="number" id="qty-10" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemWithQty('플래쉬', 50,000,000, 'qty-10', 0, 1)">+ 추가</button>
                 </div>
 
                 <div class="item-row">
@@ -413,9 +404,8 @@
                         <span class="item-name">C4</span>
                         <span class="item-price-text">20,000,000원</span>
                     </div>
-
-                    <input type="number" id="qty-11" class="item-qty-input" value="1" min="1">
-                    <button onclick="addItemWithQty('C4', 30000000, 'qty-11', 0, 1)">+ 추가</button>
+                    <input type="number" id="qty-11" value="1" min="1">
+                    <button class="btn-add-item" onclick="addItemWithQty('C4', 20000000, 'qty-11', 0, 1)">+ 추가</button>
                 </div>
             </div>
         </div>
@@ -423,39 +413,36 @@
 
     <!-- 오른쪽: 선택된 항목 목록 및 영수증 계산 영역 -->
     <div class="side-panel">
-    <div class="side-title">
-        <span>📋 선택된 항목 목록</span>
-    </div>
-
-    <!-- ★여기★ id="selectedList"를 id="receipt-list"로 수정해 주세요 -->
-    <div class="selected-list" id="receipt-list">
-        <div class="empty-msg" id="emptyMsg">선택된 항목이 없습니다</div>
-    </div>
-
-    <div class="summary-box">
-        <div class="summary-row">
-            <span>총 선택 개수:</span>
-            <span id="totalQty">0개</span>
+        <div class="side-title">
+            <span>📋 선택된 항목 목록</span>
         </div>
-        <div class="summary-row total">
-            <span>최종 총 금액:</span>
-            <span id="total-price">0원</span>
+
+        <div class="selected-list" id="receipt-list">
+            <div class="empty-msg" id="emptyMsg">선택된 항목이 없습니다</div>
+        </div>
+
+        <div class="summary-box">
+            <div class="summary-row">
+                <span>총 선택 개수:</span>
+                <span id="totalQty">0개</span>
+            </div>
+            <div class="summary-row total">
+                <span>최종 총 금액:</span>
+                <span id="total-price">0원</span>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    
 let selectedItems = [];
 
-// 수량과 제한, 묶음 단위를 처리하는 추가 함수
 function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
     let qtyElement = document.getElementById(qtyInputId);
     let count = qtyElement ? parseInt(qtyElement.value) : 1;
 
     if (isNaN(count) || count < 1) count = 1;
 
-    // maxQty가 0보다 클 때만 제한 검사 (0은 무제한)
     if (maxQty > 0 && count > maxQty) {
         alert(`하루 최대 ${maxQty}개까지만 구매 가능합니다.`);
         count = maxQty;
@@ -482,7 +469,6 @@ function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
     renderReceipt();
 }
 
-// 수량 변경 함수 (+ / - 버튼)
 function changeQty(index, delta) {
     if (selectedItems[index]) {
         selectedItems[index].qty += delta;
@@ -493,13 +479,11 @@ function changeQty(index, delta) {
     renderReceipt();
 }
 
-// 항목 삭제 함수 (X 버튼)
 function removeItem(index) {
     selectedItems.splice(index, 1);
     renderReceipt();
 }
 
-// 영수증 목록 및 총액/총개수 화면 출력 함수
 function renderReceipt() {
     let receiptContainer = document.getElementById('receipt-list');
     let totalAmount = 0;
@@ -513,42 +497,33 @@ function renderReceipt() {
             let itemTotal = item.price * item.qty;
             totalAmount += itemTotal;
 
-            // 묶음 단위 고려한 표기용 개수 및 총 개수 누적
             let displayCount = item.unit ? (item.qty * item.unit) : item.qty;
             totalQuantitySum += displayCount;
 
             html += `
-                <div class="receipt-item" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <div class="receipt-item-info">
-                        <strong>${item.name}</strong> (${displayCount}개) - ${itemTotal.toLocaleString()}원
+                <div class="selected-item-row">
+                    <div class="selected-item-info">
+                        <span class="selected-item-name">${item.name}</span>
+                        <span class="selected-item-price">${itemTotal.toLocaleString()}원 (${displayCount.toLocaleString()}개)</span>
                     </div>
-                    <div class="receipt-item-qty">
-                        <button onclick="changeQty(${index}, -1)">-</button>
-                        <span style="margin: 0 5px;">${item.qty}</span>
-                        <button onclick="changeQty(${index}, 1)">+</button>
-                        <button onclick="removeItem(${index})" style="margin-left: 5px; color: red;">✕</button>
+                    <div class="qty-controls">
+                        <button class="btn-qty" onclick="changeQty(${index}, -1)">-</button>
+                        <span class="qty-val">${item.qty}</span>
+                        <button class="btn-qty" onclick="changeQty(${index}, 1)">+</button>
+                        <button class="btn-del-selected" onclick="removeItem(${index})">✕</button>
                     </div>
                 </div>
             `;
         });
     }
 
-    // 1. 목록 화면 반영
-    if (receiptContainer) {
-        receiptContainer.innerHTML = html;
-    }
+    if (receiptContainer) receiptContainer.innerHTML = html;
 
-    // 2. 총 개수 반영
     let totalQtyElement = document.getElementById('totalQty');
-    if (totalQtyElement) {
-        totalQtyElement.innerText = totalQuantitySum.toLocaleString() + '개';
-    }
+    if (totalQtyElement) totalQtyElement.innerText = totalQuantitySum.toLocaleString() + '개';
 
-    // 3. 최종 총 금액 반영
     let totalElement = document.getElementById('total-price');
-    if (totalElement) {
-        totalElement.innerText = totalAmount.toLocaleString() + '원';
-    }
+    if (totalElement) totalElement.innerText = totalAmount.toLocaleString() + '원';
 }
 </script>
 </body>

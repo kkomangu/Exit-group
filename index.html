@@ -300,6 +300,22 @@ input[type="number"]:focus {
         filter: invert(0.8);
         cursor: pointer;
     }
+        .btn-reset {
+    background-color: #ef4444;
+    color: #ffffff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: auto; /* 오른쪽에 밀착 */
+    transition: background-color 0.2s;
+}
+
+.btn-reset:hover {
+    background-color: #dc2626;
+}
     </style>
 </head>
 <body>
@@ -545,6 +561,22 @@ function renderReceipt() {
 
     let totalElement = document.getElementById('total-price');
     if (totalElement) totalElement.innerText = totalAmount.toLocaleString() + '원';
+}
+    function resetAll() {
+    if (selectedItems.length === 0) return;
+
+    if (confirm('선택된 모든 항목을 초기화하시겠습니까?')) {
+        // 선택된 배열 비우기
+        selectedItems = [];
+
+        // 입력 창 수량들도 전부 1로 초기화
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.value = 1;
+        });
+
+        // 영수증 새로고침
+        renderReceipt();
+    }
 }
 </script>
 </body>

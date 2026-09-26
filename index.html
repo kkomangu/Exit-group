@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>조직 계산기</title>
     <style>
+        .deduction-box {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+}
+
+.deduction-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 6px;
+}
+
+.deduction-row:last-child {
+    margin-bottom: 0;
+}
+
+.deduction-row.total-result {
+    font-size: 15px;
+    font-weight: bold;
+    color: #f8fafc;
+    border-top: 1px dashed #334155;
+    padding-top: 6px;
+    margin-top: 6px;
+}
         :root {
             --bg-color: #0f172a;
             --card-bg: #1e293b;
@@ -384,7 +413,7 @@ input[type="number"]:focus {
                         <span class="item-sub-info">100발</span>
                     </div>                                        
                     <input type="number" id="qty-3" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('총알', 10000000, 'qty-3', 0, 100)">+ 추가</button>
+                    <button class="btn-add-item" onclick="addItemWithQty('총알', 10000000, 'qty-3', 0, 1)">+ 추가</button>
                 </div>
             </div>
 
@@ -467,6 +496,15 @@ input[type="number"]:focus {
                 <span>최종 총 금액:</span>
                 <span id="total-price">0원</span>
             </div>
+            
+            <div class="deduction-box">
+            <div class="deduction-row">
+                <span>공제/수수료 (20%):</span>
+                <strong id="fee-amount" style="color: #ef4444;">0원</strong>
+            </div>
+            <div class="deduction-row total-result">
+                <span>실수령액 (80%):</span>
+                <strong id="final-amount" style="color: #38bdf8;">0원</strong>
         </div>
     </div>
 </div>
@@ -561,7 +599,11 @@ function renderReceipt() {
 
     let totalElement = document.getElementById('total-price');
     if (totalElement) totalElement.innerText = totalAmount.toLocaleString() + '원';
+
+    calculate80Percent();
 }
+    
+    
     function resetAll() {
     if (selectedItems.length === 0) return;
 
@@ -576,6 +618,18 @@ function renderReceipt() {
 
         // 영수증 새로고침
         renderReceipt();
+    }
+}
+function calculate80Percent() {
+    if (typeof totalAmount !== 'undefined') {
+        const fee = Math.floor(totalAmount * 0.2); // 20% 공제/수수료
+        const result = totalAmount - fee;         // 80% 실수령액
+
+        const feeEl = document.getElementById('fee-amount');
+        const finalEl = document.getElementById('final-amount');
+
+        if (feeEl) feeEl.innerText = '-' + fee.toLocaleString() + '원';
+        if (finalEl) finalEl.innerText = result.toLocaleString() + '원';
     }
 }
 </script>

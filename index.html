@@ -623,12 +623,18 @@ function renderReceipt() {
         renderReceipt();
     }
 }
-function calculateManual80Percent() {
-    const inputVal = document.getElementById('manual-amount-input').value;
-    const amount = Number(inputVal) || 0; // 입력이 없으면 0으로 처리
+function calculateManual80Percent(input) {
+    let rawValue = input.value.replace(/[^0-9]/g, '');
+    
+    if (rawValue) {
+        input.value = Number(rawValue).toLocaleString();
+    } else {
+        input.value = '';
+    }
 
-    const fee = Math.floor(amount * 0.2); // 20% 수수료
-    const result = amount - fee;         // 80% 실수령액
+    const amount = Number(rawValue) || 0;
+    const fee = Math.floor(amount * 0.2);
+    const result = amount - fee;
 
     const feeEl = document.getElementById('fee-amount');
     const finalEl = document.getElementById('final-amount');

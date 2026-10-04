@@ -5,438 +5,507 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>조직 계산기</title>
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #6366f1;
-            --btn-add-color: #3b82f6;
-            --btn-del-color: #ef4444;
-            --text-color: #f8fafc;
-            --text-sub: #94a3b8;
-            --border-color: #334155;
-            --input-bg: #0f172a;
-        }
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+    :root {
+        --bg-color: #0b0f19;
+        --card-bg: rgba(30, 41, 59, 0.7);
+        --card-border: rgba(255, 255, 255, 0.08);
+        --accent-color: #6366f1;
+        --accent-hover: #4f46e5;
+        --accent-glow: rgba(99, 102, 241, 0.35);
+        --text-main: #f8fafc;
+        --text-sub: #94a3b8;
+        --text-price: #38bdf8;
+        --input-bg: #0f172a;
+        --danger-color: #f43f5e;
+    }
 
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        background-color: var(--bg-color);
+        background-image: 
+            radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.08) 0px, transparent 50%);
+        background-attachment: fixed;
+        color: var(--text-main);
+        min-height: 100vh;
+        margin: 0;
+        padding: 28px 20px;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .calculator-layout {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .main-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* --------------------------------------------------
+       상단 네비게이션 & RP 계산기
+    -------------------------------------------------- */
+    .top-nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 4px;
+    }
+
+    .nav-pill-group {
+        display: inline-flex;
+        align-items: center;
+        background-color: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        padding: 5px;
+        gap: 6px;
+    }
+
+    .nav-tab {
+        background: transparent;
+        color: var(--text-sub);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-tab:hover {
+        color: var(--text-main);
+    }
+
+    .nav-tab.active {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        color: #ffffff;
+        font-weight: 700;
+        box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    .rp-calc-inline {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background-color: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        font-size: 13px;
+    }
+
+    .rp-label {
+        color: var(--text-sub);
+        font-weight: 600;
+    }
+
+    .rp-calc-inline input {
+        width: 90px;
+        text-align: right;
+        background-color: var(--input-bg);
+        color: var(--text-main);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 6px 10px;
+        font-size: 13px;
+        font-weight: 700;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .rp-calc-inline input:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .rp-unit {
+        color: var(--text-sub);
+        font-size: 12px;
+    }
+
+    .rp-arrow {
+        color: #475569;
+        font-size: 12px;
+        margin: 0 2px;
+    }
+
+    #rp-result-amount {
+        color: var(--text-price);
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: -0.3px;
+    }
+
+    /* --------------------------------------------------
+       탭 콘텐츠 & 카테고리 카드
+    -------------------------------------------------- */
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .categories-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 18px;
+    }
+
+    .category-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        padding: 20px;
+        border-radius: 16px;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .category-card:hover {
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .section-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #fbbf24;
+        margin-bottom: 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        letter-spacing: -0.3px;
+    }
+
+    /* --------------------------------------------------
+       개별 품목 행
+    -------------------------------------------------- */
+    .item-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(15, 23, 42, 0.4);
+        padding: 10px 12px;
+        border-radius: 10px;
+        margin-bottom: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        transition: background 0.2s;
+    }
+
+    .item-row:hover {
+        background: rgba(15, 23, 42, 0.7);
+    }
+
+    .item-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .item-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f1f5f9;
+    }
+
+    .item-price-text {
+        font-size: 13px;
+        color: var(--text-price);
+        font-weight: 700;
+    }
+
+    .item-sub-info {
+        font-size: 11px;
+        color: var(--text-sub);
+    }
+
+    .item-badge {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.15);
+        color: #a5b4fc;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 4px;
+        width: fit-content;
+        margin-top: 2px;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    /* 수량 입력 / 버튼 */
+    input[type="number"] {
+        background-color: var(--input-bg);
+        color: var(--text-main);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        outline: none;
+        width: 48px;
+        text-align: center;
+        transition: border-color 0.2s;
+    }
+
+    input[type="number"]:focus {
+        border-color: var(--accent-color);
+    }
+
+    .btn-add-item {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-main);
+        border: 1px solid var(--card-border);
+        padding: 7px 14px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        white-space: nowrap;
+    }
+
+    .btn-add-item:hover {
+        background: var(--accent-color);
+        border-color: var(--accent-color);
+        box-shadow: 0 4px 12px var(--accent-glow);
+        transform: translateY(-1px);
+    }
+
+    /* --------------------------------------------------
+       오른쪽 사이드 패널 (선택 항목 영수증)
+    -------------------------------------------------- */
+    .side-panel {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        padding: 22px;
+        border-radius: 16px;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--text-main);
+    }
+
+    .btn-reset {
+        background-color: rgba(244, 63, 94, 0.1);
+        color: var(--danger-color);
+        border: 1px solid rgba(244, 63, 94, 0.2);
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-reset:hover {
+        background-color: var(--danger-color);
+        color: #ffffff;
+        box-shadow: 0 2px 10px rgba(244, 63, 94, 0.3);
+    }
+
+    .selected-list {
+        min-height: 160px;
+        max-height: 380px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-right: 4px;
+    }
+
+    /* 커스텀 스크롤바 */
+    .selected-list::-webkit-scrollbar {
+        width: 5px;
+    }
+    .selected-list::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+    }
+
+    .empty-msg {
+        text-align: center;
+        color: var(--text-sub);
+        font-size: 13px;
+        margin-top: 60px;
+    }
+
+    .selected-item-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(15, 23, 42, 0.6);
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .selected-item-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .selected-item-name {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .selected-item-price {
+        font-size: 12px;
+        color: #10b981;
+        font-weight: 700;
+    }
+
+    .qty-controls {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .btn-qty {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        border: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s;
+    }
+
+    .btn-qty:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .qty-val {
+        font-size: 13px;
+        font-weight: 700;
+        min-width: 20px;
+        text-align: center;
+    }
+
+    .btn-del-selected {
+        background: none;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 2px 4px;
+        transition: color 0.15s;
+    }
+
+    .btn-del-selected:hover {
+        color: var(--danger-color);
+    }
+
+    /* --------------------------------------------------
+       하단 요약 영역 & 실수령액 계산
+    -------------------------------------------------- */
+    .summary-box {
+        border-top: 1px dashed var(--card-border);
+        padding-top: 16px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 13px;
+        color: var(--text-sub);
+    }
+
+    .summary-row.total {
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--text-main);
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--card-border);
+    }
+
+    .summary-row.total span:last-child {
+        color: #38bdf8;
+    }
+
+    .deduction-box {
+        margin-top: 14px;
+        padding: 12px 14px;
+        background-color: rgba(15, 23, 42, 0.8);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+    }
+
+    .deduction-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: var(--text-sub);
+        margin-bottom: 8px;
+    }
+
+    .deduction-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .deduction-row.total-result {
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--text-main);
+        border-top: 1px dashed var(--card-border);
+        padding-top: 8px;
+        margin-top: 8px;
+    }
+
+    @media (max-width: 900px) {
         .calculator-layout {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 20px;
-            align-items: start;
+            grid-template-columns: 1fr;
         }
-
-        .main-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* 상단 네비게이션 & 탭 스위처 */
-        .top-nav-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .nav-pill-group {
-            display: inline-flex;
-            align-items: center;
-            background-color: #171f2d;
-            border: 1px solid #2d3748;
-            border-radius: 12px;
-            padding: 4px;
-            gap: 6px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .nav-tab {
-            background: transparent;
-            color: var(--text-sub);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-tab.active {
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            color: #ffffff;
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
-        }
-
-        /* RP 계산기 영역 */
-        .rp-calc-inline {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background-color: #171f2d;
-            border: 1px solid #2d3748;
-            border-radius: 12px;
-            font-size: 13px;
-        }
-
-        .rp-label {
-            color: #cbd5e1;
-            font-weight: 600;
-        }
-
-        .rp-calc-inline input {
-            width: 85px;
-            text-align: right;
-            background-color: #0f172a;
-            color: #f8fafc;
-            border: 1px solid #334155;
-            border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 13px;
-            font-weight: 600;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .rp-calc-inline input:focus {
-            border-color: #6366f1;
-        }
-
-        .rp-unit {
-            color: #94a3b8;
-            font-size: 12px;
-        }
-
-        .rp-arrow {
-            color: #64748b;
-            font-size: 12px;
-            margin: 0 2px;
-        }
-
-        #rp-result-amount {
-            color: #38bdf8;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        /* 탭 콘텐츠 영역 숨김/표시 */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* 카테고리 카드 스타일 */
-        .categories-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 15px;
-        }
-
-        .category-card {
-            background: var(--card-bg);
-            padding: 16px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-
-        .section-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #f59e0b;
-            margin-bottom: 12px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid #f59e0b;
-        }
-
-        .item-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 8px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .item-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .item-name {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .item-price-text {
-            font-size: 12px;
-            color: #4ade80;
-            font-weight: 600;
-        }
-
-        .item-sub-info {
-            font-size: 11px;
-            color: var(--text-sub);
-        }
-
-        .item-badge {
-            display: inline-block;
-            background-color: #312e81;
-            color: #a5b4fc;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            width: fit-content;
-            margin-top: 2px;
-        }
-
-        /* 수량 입력 / 추가 버튼 */
-        input[type="number"] {
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 14px;
-            outline: none;
-            width: 50px;
-            text-align: center;
-        }
-
-        input[type="number"]:focus {
-            border-color: var(--btn-add-color);
-        }
-
-        .btn-add-item {
-            background-color: #334155;
-            color: #f8fafc;
-            border: 1px solid #475569;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-
-        .btn-add-item:hover {
-            background-color: var(--btn-add-color);
-            border-color: var(--btn-add-color);
-        }
-
-        /* 오른쪽 선택된 항목 영수증 패널 */
         .side-panel {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            position: sticky;
-            top: 20px;
+            position: static;
         }
-
-        .side-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-color);
-        }
-
-        .selected-list {
-            min-height: 150px;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .empty-msg {
-            text-align: center;
-            color: var(--text-sub);
-            font-size: 14px;
-            margin-top: 50px;
-        }
-
-        .selected-item-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .selected-item-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .selected-item-name {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .selected-item-price {
-            font-size: 12px;
-            color: #10b981;
-            font-weight: bold;
-        }
-
-        .qty-controls {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-qty {
-            background: #334155;
-            color: #fff;
-            border: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-qty:hover {
-            background: #475569;
-        }
-
-        .qty-val {
-            font-size: 13px;
-            font-weight: bold;
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .btn-del-selected {
-            background: none;
-            border: none;
-            color: var(--text-sub);
-            cursor: pointer;
-            font-size: 14px;
-            margin-left: 4px;
-        }
-
-        .btn-del-selected:hover {
-            color: var(--btn-del-color);
-        }
-
-        .btn-reset {
-            background-color: #ef4444;
-            color: #ffffff;
-            border: none;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-left: auto;
-            transition: background-color 0.2s;
-        }
-
-        .btn-reset:hover {
-            background-color: #dc2626;
-        }
-
-        .summary-box {
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--text-sub);
-        }
-
-        .summary-row.total {
-            font-size: 18px;
-            font-weight: bold;
-            color: #f59e0b;
-            margin-top: 12px;
-            padding-top: 8px;
-            border-top: 1px dashed var(--border-color);
-        }
-
-        .summary-row.total span:last-child {
-            color: #10b981;
-        }
-
-        .deduction-box {
-            margin-top: 12px;
-            padding: 10px 12px;
-            background-color: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-        }
-
-        .deduction-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 6px;
-        }
-
-        .deduction-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .deduction-row.total-result {
-            font-size: 15px;
-            font-weight: bold;
-            color: #f8fafc;
-            border-top: 1px dashed #334155;
-            padding-top: 6px;
-            margin-top: 6px;
-        }
-
-        @media (max-width: 900px) {
-            .calculator-layout {
-                grid-template-columns: 1fr;
-            }
-            .side-panel {
-                position: static;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 

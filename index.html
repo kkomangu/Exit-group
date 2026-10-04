@@ -448,13 +448,6 @@
                 <button class="nav-tab" onclick="switchTab(this, 'penalty-calc-tab')">
                     🧮 RP(벌금)
                 </button>
-
-                <div class="rp-calc-inline">
-                    <span class="rp-label">🎯 RP</span>
-                    <input type="text" id="rp-input" placeholder="0" oninput="calculateRpAmount(this)">
-                    <span class="rp-unit">RP</span>
-                    <span class="rp-arrow">→</span>
-                    <strong id="rp-result-amount">0원</strong>
                 </div>
             </div>
         </div>
@@ -495,11 +488,11 @@
 
                     <div class="item-row">
                         <div class="item-info">
-                            <span class="item-name">G</span>
+                            <span class="item-name">마이크로SMG</span>
                             <span class="item-price-text">150,000,000원</span>
                         </div>                
                         <input type="number" id="qty-5" value="1" min="1">
-                        <button class="btn-add-item" onclick="addItemWithQty('G', 150000000, 'qty-5', 0, 1)">+ 추가</button>
+                        <button class="btn-add-item" onclick="addItemWithQty('마이크로SMG', 150000000, 'qty-5', 0, 1)">+ 추가</button>
                     </div>
 
                     <div class="item-row">
@@ -590,99 +583,99 @@
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">지상 C</span>
-                            <span class="item-badge">인당 3,000 RP</span>
-                            <span class="item-price-text">3,000,000원</span>
+                            <span class="item-badge">인당</span>
+                            <span class="item-price-text">30,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-1" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('지상 C', 3000000, 3000, 'penalty-qty-1')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('지상 C', 30000000, 'penalty-qty-1')">+ 추가</button>
                     </div>
 
                     <!-- 지상 D 패배 -->
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">지상 D</span>
-                            <span class="item-badge">인당 2,000 RP</span>
-                            <span class="item-price-text">2,000,000원</span>
+                            <span class="item-badge">인당</span>
+                            <span class="item-price-text">20,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-2" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('지상 D', 2000000, 2000, 'penalty-qty-2')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('지상 D', 20000000, 'penalty-qty-2')">+ 추가</button>
                     </div>
 
                     <!-- 남공게릴라 패배 -->
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">남공 게릴라</span>
-                            <span class="item-badge">인당 3,000 RP</span>
-                            <span class="item-price-text">3,000,000원</span>
+                            <span class="item-badge">인당</span>
+                            <span class="item-price-text">30,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-3" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('남공 게릴라', 3000000, 3000, 'penalty-qty-3')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('남공 게릴라', 30000000, 'penalty-qty-3')">+ 추가</button>
                     </div>
 
                     <!-- 사유지게릴라 패배 -->
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">사유지 게릴라</span>
-                            <span class="item-badge">인당 3,000 RP</span>
-                            <span class="item-price-text">3,000,000원</span>
+                            <span class="item-badge">인당</span>
+                            <span class="item-price-text">30,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-4" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('사유지 게릴라', 3000000, 3000, 'penalty-qty-4')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('사유지 게릴라', 30000000, 'penalty-qty-4')">+ 추가</button>
                     </div>
 
                     <!-- 카게 패배 -->
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">카지노 게릴라</span>
-                            <span class="item-badge">인당 3,000 RP</span>
-                            <span class="item-price-text">3,000,000원</span>
+                            <span class="item-badge">인당</span>
+                            <span class="item-price-text">30,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-5" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('카지노 게릴라', 3000000, 3000, 'penalty-qty-5')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('카지노 게릴라', 30000000, 'penalty-qty-5')">+ 추가</button>
                     </div>
 
                     <!-- 밀게 패배 -->
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">밀공장 게릴라</span>
-                            <span class="item-badge">인당 3,000 RP</span>
-                            <span class="item-price-text">3,000,000원</span>
+                            <span class="item-badge">인당</span>
+                            <span class="item-price-text">30,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-6" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('밀공장 게릴라', 3000000, 3000, 'penalty-qty-6')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('밀공장 게릴라', 30000000, 'penalty-qty-6')">+ 추가</button>
                     </div>
 
                     <!-- 건게 패배 -->
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">건샵 게릴라</span>
-                            <span class="item-badge">인당 3,000 RP</span>
-                            <span class="item-price-text">3,000,000원</span>
+                            <span class="item-badge">인당</span>
+                            <span class="item-price-text">30,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-7" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('건샵 게릴라', 3000000, 3000, 'penalty-qty-7')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('건샵 게릴라', 30000000, 'penalty-qty-7')">+ 추가</button>
                     </div>
 
                     <!-- 군게 패배 -->
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">군사기지 게릴라</span>
-                            <span class="item-badge">인당 3,000 RP</span>
+                            <span class="item-badge">인당</span>
                             <span class="item-price-text">3,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-8" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('군사기지 게릴라', 3000000, 3000, 'penalty-qty-8')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('군사기지 게릴라', 30000000, 'penalty-qty-8')">+ 추가</button>
                     </div>
 
                     <!-- 대 패배 -->
                     <div class="item-row">
                         <div class="item-info">
                             <span class="item-name">대전쟁</span>
-                            <span class="item-badge">인당 6,000 RP</span>
-                            <span class="item-price-text">6,000,000원</span>
+                            <span class="item-badge">인당</span>
+                            <span class="item-price-text">60,000,000원</span>
                         </div>
                         <input type="number" id="penalty-qty-9" value="1" min="1">
-                        <button class="btn-add-item" onclick="addPenaltyItem('대전쟁', 6000000, 6000, 'penalty-qty-9')">+ 추가</button>
+                        <button class="btn-add-item" onclick="addPenaltyItem('대전쟁', 60000000, 'penalty-qty-9')">+ 추가</button>
                     </div>
                 </div>
             </div>

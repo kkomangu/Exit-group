@@ -734,7 +734,7 @@ function switchTab(selectedBtn, tabId) {
 }
 
 /* 일반 항목 추가 함수 */
-function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
+function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1, unitText = '개') {
     let qtyElement = document.getElementById(qtyInputId);
     let count = qtyElement ? parseInt(qtyElement.value) : 1;
 
@@ -759,6 +759,7 @@ function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
             price: price,
             qty: count,
             unit: unit
+            unitText: unitText
         });
     }
 
@@ -773,7 +774,8 @@ function addPenaltyItem(name, price, rpAmount, qtyInputId) {
     if (isNaN(count) || count < 1) count = 1;
 
     // 영수증에 추가
-    addItemWithQty(name, price, qtyInputId, 0, 1);
+    addItemWithQty(name, price, qtyInputId, 0, 1, '명');
+}
 
     // RP 입력창 자동 누적
     const rpInput = document.getElementById('rp-input');

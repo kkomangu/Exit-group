@@ -54,9 +54,6 @@
         gap: 20px;
     }
 
-    /* --------------------------------------------------
-       상단 네비게이션 & RP 계산기
-    -------------------------------------------------- */
     .top-nav-container {
         display: flex;
         align-items: center;
@@ -157,9 +154,6 @@
         letter-spacing: -0.3px;
     }
 
-    /* --------------------------------------------------
-       탭 콘텐츠 & 카테고리 카드
-    -------------------------------------------------- */
     .tab-content {
         display: none;
     }
@@ -201,9 +195,6 @@
         letter-spacing: -0.3px;
     }
 
-    /* --------------------------------------------------
-       개별 품목 행
-    -------------------------------------------------- */
     .item-row {
         display: flex;
         align-items: center;
@@ -257,7 +248,6 @@
         border: 1px solid rgba(99, 102, 241, 0.3);
     }
 
-    /* 수량 입력 / 버튼 */
     input[type="number"] {
         background-color: var(--input-bg);
         color: var(--text-main);
@@ -296,9 +286,6 @@
         transform: translateY(-1px);
     }
 
-    /* --------------------------------------------------
-       오른쪽 사이드 패널 (선택 항목 영수증)
-    -------------------------------------------------- */
     .side-panel {
         background: var(--card-bg);
         backdrop-filter: blur(16px);
@@ -438,9 +425,6 @@
         color: var(--danger-color);
     }
 
-    /* --------------------------------------------------
-       하단 요약 영역 & 실수령액 계산
-    -------------------------------------------------- */
     .summary-box {
         border-top: 1px dashed var(--card-border);
         padding-top: 16px;
@@ -516,7 +500,7 @@
         <div class="top-nav-container">
             <div class="nav-pill-group">
                 <button class="nav-tab active" onclick="switchTab(this, 'org-calc-tab')">
-                    ⚔️ 조직 물품
+                    ⚓ 조직 물품
                 </button>
                 <button class="nav-tab" onclick="switchTab(this, 'penalty-calc-tab')">
                     🧮 RP(벌금)

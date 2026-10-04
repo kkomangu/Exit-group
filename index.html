@@ -5,35 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>조직 계산기</title>
     <style>
-        .deduction-box {
-    margin-top: 12px;
-    padding: 10px 12px;
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 8px;
-}
-
-.deduction-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    color: #94a3b8;
-    margin-bottom: 6px;
-}
-
-.deduction-row:last-child {
-    margin-bottom: 0;
-}
-
-.deduction-row.total-result {
-    font-size: 15px;
-    font-weight: bold;
-    color: #f8fafc;
-    border-top: 1px dashed #334155;
-    padding-top: 6px;
-    margin-top: 6px;
-}
         :root {
             --bg-color: #0f172a;
             --card-bg: #1e293b;
@@ -45,22 +16,6 @@
             --border-color: #334155;
             --input-bg: #0f172a;
         }
-
-        /* 품목 내부 메모 입력 칸 */
-.item-memo-input {
-    background-color: #0f172a;
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    width: 110px;
-    outline: none;
-}
-
-.item-memo-input:focus {
-    border-color: var(--btn-add-color);
-}
 
         body {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
@@ -87,16 +42,104 @@
             gap: 20px;
         }
 
-        .header-area {
+        /* 상단 네비게이션 & 탭 스위처 */
+        .top-nav-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
 
-        h2 {
-            margin: 0;
-            color: var(--text-color);
-            font-size: 24px;
+        .nav-pill-group {
+            display: inline-flex;
+            align-items: center;
+            background-color: #171f2d;
+            border: 1px solid #2d3748;
+            border-radius: 12px;
+            padding: 4px;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-tab {
+            background: transparent;
+            color: var(--text-sub);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+        }
+
+        /* RP 계산기 영역 */
+        .rp-calc-inline {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 12px 0 6px;
+            font-size: 13px;
+            border-left: 1px solid #334155;
+            margin-left: 4px;
+        }
+
+        .rp-label {
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .rp-calc-inline input {
+            width: 75px;
+            text-align: right;
+            background-color: #0f172a;
+            color: #f8fafc;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .rp-calc-inline input:focus {
+            border-color: #6366f1;
+        }
+
+        .rp-unit {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .rp-arrow {
+            color: #64748b;
+            font-size: 12px;
+            margin: 0 2px;
+        }
+
+        #rp-result-amount {
+            color: #38bdf8;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* 탭 콘텐츠 영역 숨김/표시 */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         /* 카테고리 카드 스타일 */
@@ -146,10 +189,43 @@
 
         .item-price-text {
             font-size: 12px;
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        .item-sub-info {
+            font-size: 11px;
             color: var(--text-sub);
         }
 
-        /* + 추가 버튼 */
+        .item-badge {
+            display: inline-block;
+            background-color: #312e81;
+            color: #a5b4fc;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            width: fit-content;
+            margin-top: 2px;
+        }
+
+        /* 수량 입력 / 추가 버튼 */
+        input[type="number"] {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 14px;
+            outline: none;
+            width: 50px;
+            text-align: center;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--btn-add-color);
+        }
+
         .btn-add-item {
             background-color: #334155;
             color: #f8fafc;
@@ -275,6 +351,23 @@
             color: var(--btn-del-color);
         }
 
+        .btn-reset {
+            background-color: #ef4444;
+            color: #ffffff;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: auto;
+            transition: background-color 0.2s;
+        }
+
+        .btn-reset:hover {
+            background-color: #dc2626;
+        }
+
         .summary-box {
             border-top: 1px solid var(--border-color);
             padding-top: 15px;
@@ -301,6 +394,36 @@
             color: #10b981;
         }
 
+        .deduction-box {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+        }
+
+        .deduction-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+
+        .deduction-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .deduction-row.total-result {
+            font-size: 15px;
+            font-weight: bold;
+            color: #f8fafc;
+            border-top: 1px dashed #334155;
+            padding-top: 6px;
+            margin-top: 6px;
+        }
+
         @media (max-width: 900px) {
             .calculator-layout {
                 grid-template-columns: 1fr;
@@ -309,263 +432,258 @@
                 position: static;
             }
         }
-        input[type="number"] {
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 14px;
-    outline: none;
-    width: 60px;
-    text-align: center;
-}
-
-input[type="number"]:focus {
-    border-color: var(--btn-add-color);
-}
-        input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        filter: invert(0.8);
-        cursor: pointer;
-    }
-        .btn-reset {
-    background-color: #ef4444;
-    color: #ffffff;
-    border: none;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-left: auto; /* 오른쪽에 밀착 */
-    transition: background-color 0.2s;
-}
-
-.btn-reset:hover {
-    background-color: #dc2626;
-}
-        /* 상단 네비게이션 전체 컨테이너 */
-.top-nav-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-/* 알약(Pill) 모양 전체 감싸는 테두리 상자 */
-.nav-pill-group {
-    display: inline-flex;
-    align-items: center;
-    background-color: #171f2d;
-    border: 1px solid #2d3748;
-    border-radius: 12px;
-    padding: 4px;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* 보라색 액티브 탭 버튼 */
-.nav-tab.active {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 8px 16px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
-    cursor: default;
-}
-
-/* 인라인 RP 계산기 영역 */
-.rp-calc-inline {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0 12px 0 6px;
-    font-size: 13px;
-}
-
-.rp-label {
-    color: #cbd5e1;
-    font-weight: 600;
-}
-
-/* RP 입력창 스타일 */
-.rp-calc-inline input {
-    width: 75px;
-    text-align: right;
-    background-color: #0f172a;
-    color: #f8fafc;
-    border: 1px solid #334155;
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 13px;
-    font-weight: 600;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.rp-calc-inline input:focus {
-    border-color: #6366f1;
-}
-
-.rp-unit {
-    color: #94a3b8;
-    font-size: 12px;
-}
-
-.rp-arrow {
-    color: #64748b;
-    font-size: 12px;
-    margin: 0 2px;
-}
-
-/* 결과 금액 강조 */
-#rp-result-amount {
-    color: #38bdf8;
-    font-weight: 700;
-    font-size: 14px;
-}
     </style>
 </head>
 <body>
 
 <div class="calculator-layout">
-    <!-- 왼쪽: 카테고리 및 품목 선택 영역 -->
+    <!-- 왼쪽: 메인 패널 -->
     <div class="main-panel">
+        <!-- 상단 탭 스위처 바 -->
         <div class="top-nav-container">
-    <div class="nav-pill-group">
-        <div class="nav-tab active">
-            <span>⚔️ 조직 계산기</span>
-        </div>
-        
-        <div class="rp-calc-inline">
-            <span class="rp-label">🎯 RP</span>
-            <input type="text" id="rp-input" placeholder="0" oninput="calculateRpAmount(this)">
-            <span class="rp-unit">RP</span>
-            <span class="rp-arrow">→</span>
-            <strong id="rp-result-amount">0원</strong>
-        </div>
-    </div>
-</div>
+            <div class="nav-pill-group">
+                <button class="nav-tab active" onclick="switchTab(this, 'org-calc-tab')">
+                    ⚔️ 조직 물품
+                </button>
+                <button class="nav-tab" onclick="switchTab(this, 'penalty-calc-tab')">
+                    🧮 RP(벌금)
+                </button>
 
-        <div class="categories-container">
-            <!-- 1번째 카테고리: 무기 -->
-            <div class="category-card">
-                <div class="section-title">🔫 무기</div>
-                
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">피스톨</span>
-                        <span class="item-price-text">100,000,000원</span>
-                    </div>                    
-                    <input type="number" id="qty-8" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('피스톨', 100000000, 'qty-8', 0, 1)">+ 추가</button>
-                </div>
-
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">카빈소총</span>
-                        <span class="item-price-text">250,000,000원</span>
-                    </div>                    
-                    <input type="number" id="qty-7" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('카빈소총', 250000000, 'qty-7', 0, 1)">+ 추가</button>
-                </div>
-
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">어썰트라이플</span>
-                        <span class="item-price-text">200,000,000원</span>
-                    </div>
-                    <input type="number" id="qty-6" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('어썰트라이플', 200000000, 'qty-6', 0, 1)">+ 추가</button>
-                </div>
-
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">마이크로SMG</span>
-                        <span class="item-price-text">150,000,000원</span>
-                    </div>                
-                    <input type="number" id="qty-5" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('마이크로SMG', 150000000, 'qty-5', 0, 1)">+ 추가</button>
-                </div>
-
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">펌프샷건</span>
-                        <span class="item-price-text">150,000,000원</span>
-                    </div>                    
-                    <input type="number" id="qty-4" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('펌프샷건', 150000000, 'qty-4', 0, 1)">+ 추가</button>
-                </div>
-                
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">총알</span>
-                        <span class="item-price-text">10,000,000원</span>
-                        <span class="item-sub-info">100발</span>
-                    </div>                                        
-                    <input type="number" id="qty-3" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('총알', 10000000, 'qty-3', 0, 1)">+ 추가</button>
+                <div class="rp-calc-inline">
+                    <span class="rp-label">🎯 RP</span>
+                    <input type="text" id="rp-input" placeholder="0" oninput="calculateRpAmount(this)">
+                    <span class="rp-unit">RP</span>
+                    <span class="rp-arrow">→</span>
+                    <strong id="rp-result-amount">0원</strong>
                 </div>
             </div>
+        </div>
 
-            <!-- 2번째 카테고리: 소모품 -->
-            <div class="category-card">
-                <div class="section-title">💊 마약</div>
-                
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">마약공장 입장권</span>
-                        <span class="item-price-text">30,000,000원</span>
-                        <span class="item-sub-info">하루 판매 제한 10개</span>
+        <!-- 탭 1: 조직 물품 -->
+        <div id="org-calc-tab" class="tab-content active">
+            <div class="categories-container">
+                <!-- 무기 -->
+                <div class="category-card">
+                    <div class="section-title">🔫 무기</div>
+                    
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">피스톨</span>
+                            <span class="item-price-text">100,000,000원</span>
+                        </div>                    
+                        <input type="number" id="qty-8" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('피스톨', 100000000, 'qty-8', 0, 1)">+ 추가</button>
                     </div>
-                    <input type="number" id="qty-2" value="1" min="1" max="10">
-                    <button class="btn-add-item" onclick="addItemWithQty('마약공장 입장권', 30000000, 'qty-2', 10, 1)">+ 추가</button>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">카빈소총</span>
+                            <span class="item-price-text">250,000,000원</span>
+                        </div>                    
+                        <input type="number" id="qty-7" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('카빈소총', 250000000, 'qty-7', 0, 1)">+ 추가</button>
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">어썰트라이플</span>
+                            <span class="item-price-text">200,000,000원</span>
+                        </div>
+                        <input type="number" id="qty-6" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('어썰트라이플', 200000000, 'qty-6', 0, 1)">+ 추가</button>
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">G</span>
+                            <span class="item-price-text">150,000,000원</span>
+                        </div>                
+                        <input type="number" id="qty-5" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('G', 150000000, 'qty-5', 0, 1)">+ 추가</button>
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">펌프샷건</span>
+                            <span class="item-price-text">150,000,000원</span>
+                        </div>                    
+                        <input type="number" id="qty-4" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('펌프샷건', 150000000, 'qty-4', 0, 1)">+ 추가</button>
+                    </div>
+                    
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">총알</span>
+                            <span class="item-price-text">10,000,000원</span>
+                            <span class="item-sub-info">100발</span>
+                        </div>                                        
+                        <input type="number" id="qty-3" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('총알', 10000000, 'qty-3', 0, 1)">+ 추가</button>
+                    </div>
                 </div>
 
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">대마초 씨앗</span>
-                        <span class="item-price-text">100,000,000원</span>
-                        <span class="item-sub-info">1000개</span>
+                <div class="category-card">
+                    <div class="section-title">💊 마약</div>
+                    
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">마약공장 입장권</span>
+                            <span class="item-price-text">30,000,000원</span>
+                            <span class="item-sub-info">하루 판매 제한 10개</span>
+                        </div>
+                        <input type="number" id="qty-2" value="1" min="1" max="10">
+                        <button class="btn-add-item" onclick="addItemWithQty('마약공장 입장권', 30000000, 'qty-2', 10, 1)">+ 추가</button>
                     </div>
-                    <input type="number" id="qty-1" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('대마초 씨앗', 100000000, 'qty-1', Infinity, 1000)">+ 추가</button>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">대마초 씨앗</span>
+                            <span class="item-price-text">100,000,000원</span>
+                            <span class="item-sub-info">1000개</span>
+                        </div>
+                        <input type="number" id="qty-1" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('대마초씨앗', 100000000, 'qty-1', Infinity, 1000)">+ 추가</button>
+                    </div>
+                </div>
+
+                <!-- 근 -->
+                <div class="category-card">
+                    <div class="section-title">🔪 근접무기</div>
+                    
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">근접무기 상자</span>
+                            <span class="item-price-text">50,000,000원</span>
+                        </div>
+                        <input type="number" id="qty-9" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('근접무기 상자', 50000000, 'qty-9', 0, 1)">+ 추가</button>
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">플래쉬</span>
+                            <span class="item-price-text">50,000,000원</span>
+                        </div>
+                        <input type="number" id="qty-10" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('플래쉬', 50000000, 'qty-10', 0, 1)">+ 추가</button>
+                    </div>
+
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">C4</span>
+                            <span class="item-price-text">20,000,000원</span>
+                        </div>
+                        <input type="number" id="qty-11" value="1" min="1">
+                        <button class="btn-add-item" onclick="addItemWithQty('C4', 20000000, 'qty-11', 0, 1)">+ 추가</button>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- 3번째 카테고리: 근접무기 -->
-            <div class="category-card">
-                <div class="section-title">🔪 근접무기</div>
-                
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">근접무기 상자</span>
-                        <span class="item-price-text">50,000,000원</span>
+        <!-- 탭 2: RP(벌금) -->
+        <div id="penalty-calc-tab" class="tab-content">
+            <div class="categories-container">
+                <div class="category-card" style="grid-column: 1 / -1;">
+                    <div class="section-title">패배 항목 리스트</div>
+                    
+                    <!-- 지상 C 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">지상 C</span>
+                            <span class="item-badge">인당 3,000 RP</span>
+                            <span class="item-price-text">3,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-1" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('지상 C', 3000000, 3000, 'penalty-qty-1')">+ 추가</button>
                     </div>
-                    <input type="number" id="qty-9" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('근접무기 상자', 50000000, 'qty-9', 0, 1)">+ 추가</button>
-                </div>
 
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">플래쉬</span>
-                        <span class="item-price-text">50,000,000원</span>
+                    <!-- 지상 D 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">지상 D</span>
+                            <span class="item-badge">인당 2,000 RP</span>
+                            <span class="item-price-text">2,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-2" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('지상 D', 2000000, 2000, 'penalty-qty-2')">+ 추가</button>
                     </div>
-                    <input type="number" id="qty-10" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('플래쉬', 50000000, 'qty-10', 0, 1)">+ 추가</button>
-                </div>
 
-                <div class="item-row">
-                    <div class="item-info">
-                        <span class="item-name">C4</span>
-                        <span class="item-price-text">20,000,000원</span>
+                    <!-- 남공게릴라 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">남공 게릴라</span>
+                            <span class="item-badge">인당 3,000 RP</span>
+                            <span class="item-price-text">3,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-3" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('남공 게릴라', 3000000, 3000, 'penalty-qty-3')">+ 추가</button>
                     </div>
-                    <input type="number" id="qty-11" value="1" min="1">
-                    <button class="btn-add-item" onclick="addItemWithQty('C4', 20000000, 'qty-11', 0, 1)">+ 추가</button>
+
+                    <!-- 사유지게릴라 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">사유지 게릴라</span>
+                            <span class="item-badge">인당 3,000 RP</span>
+                            <span class="item-price-text">3,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-4" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('사유지 게릴라', 3000000, 3000, 'penalty-qty-4')">+ 추가</button>
+                    </div>
+
+                    <!-- 카게 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">카지노 게릴라</span>
+                            <span class="item-badge">인당 3,000 RP</span>
+                            <span class="item-price-text">3,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-5" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('카지노 게릴라', 3000000, 3000, 'penalty-qty-5')">+ 추가</button>
+                    </div>
+
+                    <!-- 밀게 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">밀공장 게릴라</span>
+                            <span class="item-badge">인당 3,000 RP</span>
+                            <span class="item-price-text">3,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-6" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('밀공장 게릴라', 3000000, 3000, 'penalty-qty-6')">+ 추가</button>
+                    </div>
+
+                    <!-- 건게 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">건샵 게릴라</span>
+                            <span class="item-badge">인당 3,000 RP</span>
+                            <span class="item-price-text">3,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-7" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('건샵 게릴라', 3000000, 3000, 'penalty-qty-7')">+ 추가</button>
+                    </div>
+
+                    <!-- 군게 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">군사기지 게릴라</span>
+                            <span class="item-badge">인당 3,000 RP</span>
+                            <span class="item-price-text">3,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-8" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('군사기지 게릴라', 3000000, 3000, 'penalty-qty-8')">+ 추가</button>
+                    </div>
+
+                    <!-- 대 패배 -->
+                    <div class="item-row">
+                        <div class="item-info">
+                            <span class="item-name">대전쟁</span>
+                            <span class="item-badge">인당 6,000 RP</span>
+                            <span class="item-price-text">6,000,000원</span>
+                        </div>
+                        <input type="number" id="penalty-qty-9" value="1" min="1">
+                        <button class="btn-add-item" onclick="addPenaltyItem('대전쟁', 6000000, 6000, 'penalty-qty-9')">+ 추가</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -593,23 +711,37 @@ input[type="number"]:focus {
             </div>
             
             <div class="deduction-box">
-    <div class="deduction-input-row">
-        <span>금액 입력:</span>
-        <input type="text" id="manual-amount-input" placeholder="0" oninput="calculateManual80Percent(this)" style="width: 100px; text-align: right; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 4px; padding: 3px 6px; font-size: 12px;"> 원
-    </div>
-    <div class="deduction-row" style="margin-top: 8px;">
-        <span>수수료 (20%):</span>
-        <strong id="fee-amount" style="color: #ef4444; font-size: 11px;">0원</strong>
-    </div>
-    <div class="deduction-row total-result">
-        <span>실수령액 (80%):</span>
-        <strong id="final-amount" style="color: #38bdf8; font-size: 13px;">0원</strong>
+                <div class="deduction-row" style="margin-bottom: 8px;">
+                    <span>금액 직접 입력:</span>
+                    <input type="text" id="manual-amount-input" placeholder="0" oninput="calculateManual80Percent(this)" style="width: 100px; text-align: right; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 4px; padding: 3px 6px; font-size: 12px;"> 원
+                </div>
+                <div class="deduction-row">
+                    <span>수수료 (20%):</span>
+                    <strong id="fee-amount" style="color: #ef4444; font-size: 12px;">0원</strong>
+                </div>
+                <div class="deduction-row total-result">
+                    <span>실수령액 (80%):</span>
+                    <strong id="final-amount" style="color: #38bdf8; font-size: 14px;">0원</strong>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
 let selectedItems = [];
 
+/* 탭 전환 함수 */
+function switchTab(selectedBtn, tabId) {
+    document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+    selectedBtn.classList.add('active');
+    const target = document.getElementById(tabId);
+    if (target) target.classList.add('active');
+}
+
+/* 일반 항목 추가 함수 */
 function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
     let qtyElement = document.getElementById(qtyInputId);
     let count = qtyElement ? parseInt(qtyElement.value) : 1;
@@ -640,6 +772,25 @@ function addItemWithQty(name, price, qtyInputId, maxQty = 0, unit = 1) {
 
     if (qtyElement) qtyElement.value = 1;
     renderReceipt();
+}
+
+/* 패배 항목 추가 함수 (RP도 함께 입력창에 누적) */
+function addPenaltyItem(name, price, rpAmount, qtyInputId) {
+    let qtyElement = document.getElementById(qtyInputId);
+    let count = qtyElement ? parseInt(qtyElement.value) : 1;
+    if (isNaN(count) || count < 1) count = 1;
+
+    // 영수증에 추가
+    addItemWithQty(name, price, qtyInputId, 0, 1);
+
+    // RP 입력창 자동 누적
+    const rpInput = document.getElementById('rp-input');
+    if (rpInput) {
+        let currentRp = Number(rpInput.value.replace(/[^0-9]/g, '')) || 0;
+        currentRp += (rpAmount * count);
+        rpInput.value = currentRp.toLocaleString();
+        calculateRpAmount(rpInput);
+    }
 }
 
 function changeQty(index, delta) {
@@ -697,27 +848,34 @@ function renderReceipt() {
 
     let totalElement = document.getElementById('total-price');
     if (totalElement) totalElement.innerText = totalAmount.toLocaleString() + '원';
-
-    calculate80Percent();
 }
-    
-    
-    function resetAll() {
+
+function resetAll() {
     if (selectedItems.length === 0) return;
 
     if (confirm('선택된 모든 항목을 초기화하시겠습니까?')) {
-        // 선택된 배열 비우기
         selectedItems = [];
 
-        // 입력 창 수량들도 전부 1로 초기화
         document.querySelectorAll('input[type="number"]').forEach(input => {
             input.value = 1;
         });
 
-        // 영수증 새로고침
+        const rpInput = document.getElementById('rp-input');
+        if (rpInput) {
+            rpInput.value = '';
+            calculateRpAmount(rpInput);
+        }
+
+        const manualInput = document.getElementById('manual-amount-input');
+        if (manualInput) {
+            manualInput.value = '';
+            calculateManual80Percent(manualInput);
+        }
+
         renderReceipt();
     }
 }
+
 function calculateManual80Percent(input) {
     let rawValue = input.value.replace(/[^0-9]/g, '');
     
@@ -737,7 +895,8 @@ function calculateManual80Percent(input) {
     if (feeEl) feeEl.innerText = '-' + fee.toLocaleString() + '원';
     if (finalEl) finalEl.innerText = result.toLocaleString() + '원';
 }
-    function calculateRpAmount(input) {
+
+function calculateRpAmount(input) {
     let rawValue = input.value.replace(/[^0-9]/g, '');
     
     if (rawValue) {
